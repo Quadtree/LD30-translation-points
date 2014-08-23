@@ -28,6 +28,7 @@ public class Actor {
 		this.world = world;
 
 		BodyDef bd = new BodyDef();
+		bd.type = BodyDef.BodyType.DynamicBody;
 		bd.position.set(position);
 
 		body = world.physicsWorld.createBody(bd);
@@ -42,11 +43,19 @@ public class Actor {
 		world = null;
 	}
 
+	public float getAngle() {
+		if (body != null) {
+			return body.getAngle();
+		} else {
+			return 0;
+		}
+	}
+
 	public Vector2 getPosition() {
 		if (position != null)
 			return position.cpy();
 		else
-			return null;
+			return new Vector2(0, 0);
 	}
 
 	public boolean keep() {

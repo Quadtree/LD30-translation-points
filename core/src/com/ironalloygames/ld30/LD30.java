@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class LD30 extends ApplicationAdapter {
 	public static Assets a;
 	public static SpriteBatch batch;
+	public static OrthographicCamera cam;
 	public static final float METER_SCALE = 5f;
 	public static PlayerMiniShip pc;
 
@@ -37,8 +38,7 @@ public class LD30 extends ApplicationAdapter {
 
 		currentWorld.renderBackground();
 
-		OrthographicCamera cam = new OrthographicCamera(1024 / METER_SCALE,
-				768 / METER_SCALE);
+		cam = new OrthographicCamera(1024 / METER_SCALE, 768 / METER_SCALE);
 		cam.position.x = pc.getPosition().x;
 		cam.position.y = pc.getPosition().y;
 		cam.update();

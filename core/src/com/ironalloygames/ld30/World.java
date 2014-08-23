@@ -17,8 +17,7 @@ public abstract class World implements ContactListener {
 	public com.badlogic.gdx.physics.box2d.World physicsWorld;
 
 	public World() {
-		physicsWorld = new com.badlogic.gdx.physics.box2d.World(new Vector2(0,
-				0), true);
+		physicsWorld = new com.badlogic.gdx.physics.box2d.World(new Vector2(0, 0), true);
 		milisDone = System.currentTimeMillis();
 	}
 
@@ -83,6 +82,8 @@ public abstract class World implements ContactListener {
 				actors.remove(i--);
 			}
 		}
+
+		physicsWorld.step(0.016f, 1, 1);
 	}
 
 	public void updateIfNeeded() {
