@@ -136,6 +136,8 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 
 		updateMousePos();
 		dest = currentMousePos.cpy();
+
+		world.pivot.set(position);
 	}
 
 	private void updateMousePos() {

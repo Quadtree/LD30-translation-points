@@ -114,7 +114,12 @@ public class Actor {
 
 	public void update() {
 		position = body.getPosition().cpy();
+
+		if (world.fixPosition(position))
+			body.setTransform(position.cpy(), getAngle());
+
 		velocity = body.getLinearVelocity().cpy();
+		body.setLinearVelocity(velocity.cpy().scl(world.getDragCoeff()));
 		angle = body.getAngle();
 
 		if (immuneTranslationPoint != null) {
@@ -126,5 +131,6 @@ public class Actor {
 				immuneTranslationPoint = null;
 			}
 		}
+
 	}
 }
