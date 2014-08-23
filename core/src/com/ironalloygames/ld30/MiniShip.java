@@ -17,6 +17,10 @@ public class MiniShip extends Actor {
 	protected int thrust = 0;
 	protected int turn = 0;
 
+	public MiniShip() {
+		hp = 1;
+	}
+
 	@Override
 	public void enteringWorld(World world) {
 		super.enteringWorld(world);

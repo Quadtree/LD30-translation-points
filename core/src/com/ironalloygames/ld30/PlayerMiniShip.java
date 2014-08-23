@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.ironalloygames.ld30.world.World;
@@ -18,6 +21,8 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 
 	boolean strafeRight = false;
 	boolean thrusting = false;
+
+	OrthographicCamera uiCamera = new OrthographicCamera(1024, 768);
 
 	@Override
 	public void enteringWorld(World world) {
@@ -72,6 +77,21 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 	public boolean mouseMoved(int screenX, int screenY) {
 		setMousePos(screenX, screenY);
 		return false;
+	}
+
+	public void renderUI() {
+		LD30.sr.setProjectionMatrix(uiCamera.combined);
+		LD30.sr.begin(ShapeType.Filled);
+
+		float hpBarWidth = this.hp * 100;
+		float shieldBarWidth = this.shield * 100;
+
+		LD30.sr.setColor(Color.RED);
+		LD30.sr.rect(25 - 1024 / 2, 768 / 2 - 50, hpBarWidth, 25);
+		LD30.sr.setColor(Color.BLUE);
+		LD30.sr.rect(25 - 1024 / 2 + hpBarWidth, 768 / 2 - 50, shieldBarWidth, 25);
+
+		LD30.sr.end();
 	}
 
 	@Override

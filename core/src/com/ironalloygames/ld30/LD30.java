@@ -6,6 +6,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ld30.world.FireWorld;
 import com.ironalloygames.ld30.world.Happyspace;
@@ -22,6 +23,7 @@ public class LD30 extends ApplicationAdapter {
 	public static OrthographicCamera cam;
 	public static final float METER_SCALE = 5f;
 	public static PlayerMiniShip pc;
+	public static ShapeRenderer sr;
 
 	World currentWorld;
 	Texture img;
@@ -34,6 +36,8 @@ public class LD30 extends ApplicationAdapter {
 	public void create() {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+
+		sr = new ShapeRenderer();
 
 		a = new Assets();
 
@@ -76,18 +80,24 @@ public class LD30 extends ApplicationAdapter {
 			w.updateIfNeeded();
 		}
 
-		currentWorld = pc.world;
+		if (pc != null)
+			currentWorld = pc.world;
 
 		currentWorld.renderBackground();
 
-		cam.position.x = pc.getPosition().x;
-		cam.position.y = pc.getPosition().y;
-		cam.update();
+		if (pc != null) {
+			cam.position.x = pc.getPosition().x;
+			cam.position.y = pc.getPosition().y;
+			cam.update();
+		}
 		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
 
 		currentWorld.render();
 
 		batch.end();
+
+		if (pc != null)
+			pc.renderUI();
 	}
 }

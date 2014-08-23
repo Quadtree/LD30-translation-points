@@ -2,6 +2,7 @@ package com.ironalloygames.ld30;
 
 import java.util.HashSet;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -9,8 +10,8 @@ import com.ironalloygames.ld30.world.World;
 
 public class Star extends Actor {
 
-	public static final float BURN_POWER = 0.1f;
-	public static final float BURN_RANGE = 20;
+	public static final float BURN_POWER = 1 / 60f / 5f;
+	public static final float BURN_RANGE = 50;
 
 	Fixture burnSensor;
 
@@ -21,6 +22,7 @@ public class Star extends Actor {
 		super.beginContact(other, localFixture);
 
 		if (localFixture == burnSensor && !(other instanceof Star)) {
+
 			inBurnRange.add(other);
 		}
 	}
@@ -46,7 +48,7 @@ public class Star extends Actor {
 		cs1.setRadius(BURN_RANGE);
 		fd.shape = cs1;
 
-		body.createFixture(fd);
+		burnSensor = body.createFixture(fd);
 
 		CircleShape cs2 = new CircleShape();
 		body.createFixture(cs2, 0.2f);
@@ -57,6 +59,12 @@ public class Star extends Actor {
 		super.render();
 
 		drawDefault("star1");
+
+		for (Actor a : inBurnRange) {
+			float ang = a.getPosition().sub(position).angleRad();
+			// System.out.println(ang + " " + a.getPosition().sub(position));
+			LD30.batch.draw(LD30.a.getSprite("tp_ray"), getPosition().x, getPosition().y, .5f, .5f, 1, 1, BURN_RANGE * 2, 128f / LD30.METER_SCALE, ang * MathUtils.radiansToDegrees);
+		}
 	}
 
 	@Override
