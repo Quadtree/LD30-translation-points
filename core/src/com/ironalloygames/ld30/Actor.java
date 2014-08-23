@@ -6,8 +6,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 
 public class Actor {
 	Body body;
+	public TranslationPoint lastTranslationPoint;
 	Vector2 position;
-	World world;
+
+	public World world;
 
 	public Actor() {
 		position = new Vector2(0, 0);
@@ -56,6 +58,10 @@ public class Actor {
 			return position.cpy();
 		else
 			return new Vector2(0, 0);
+	}
+
+	public boolean isTranslatable() {
+		return true;
 	}
 
 	public boolean keep() {

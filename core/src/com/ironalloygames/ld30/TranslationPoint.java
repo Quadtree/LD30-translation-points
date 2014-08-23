@@ -2,6 +2,8 @@ package com.ironalloygames.ld30;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class TranslationPoint extends Actor {
 
@@ -14,14 +16,38 @@ public class TranslationPoint extends Actor {
 
 	@Override
 	public void beginContact(Actor other) {
-		// TODO Auto-generated method stub
 		super.beginContact(other);
+
+		if (other.isTranslatable() && other.lastTranslationPoint != this) {
+			other.lastTranslationPoint = this.otherEnd;
+			other.world.transferActor(other, destination, otherEnd.getPosition());
+		}
 	}
 
 	@Override
 	public void endContact(Actor other) {
 		// TODO Auto-generated method stub
 		super.endContact(other);
+	}
+
+	@Override
+	public void enteringWorld(World world) {
+		super.enteringWorld(world);
+
+		CircleShape cs = new CircleShape();
+		cs.setRadius(1);
+
+		FixtureDef fd = new FixtureDef();
+		fd.isSensor = true;
+		fd.shape = cs;
+		fd.density = 0;
+
+		body.createFixture(fd);
+	}
+
+	@Override
+	public boolean isTranslatable() {
+		return false;
 	}
 
 	@Override

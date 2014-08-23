@@ -135,7 +135,7 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 		currentMousePos.x = v3.x;
 		currentMousePos.y = v3.y;
 
-		System.out.println(currentMousePos);
+		// System.out.println(currentMousePos);
 	}
 
 }

@@ -10,12 +10,20 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 public abstract class World implements ContactListener {
+	class Transfer {
+		Actor a;
+		World d;
+		Vector2 p;
+	}
+
 	ArrayList<Actor> actorAddQueue = new ArrayList<Actor>();
 
 	ArrayList<Actor> actors = new ArrayList<Actor>();
 
 	public long milisDone;
+
 	public com.badlogic.gdx.physics.box2d.World physicsWorld;
+	ArrayList<Transfer> transferQueue = new ArrayList<World.Transfer>();
 
 	public World worldAbove;
 
@@ -23,6 +31,7 @@ public abstract class World implements ContactListener {
 
 	public World() {
 		physicsWorld = new com.badlogic.gdx.physics.box2d.World(new Vector2(0, 0), true);
+		physicsWorld.setContactListener(this);
 		milisDone = System.currentTimeMillis();
 	}
 
@@ -91,12 +100,28 @@ public abstract class World implements ContactListener {
 
 	}
 
+	public void transferActor(Actor a, World dest, Vector2 newPos) {
+		Transfer t = new Transfer();
+		t.a = a;
+		t.d = dest;
+		t.p = newPos;
+		transferQueue.add(t);
+	}
+
 	protected void update() {
 
 		while (!actorAddQueue.isEmpty()) {
 			actorAddQueue.get(0).enteringWorld(this);
 			actors.add(actorAddQueue.get(0));
 			actorAddQueue.remove(0);
+		}
+
+		while (!transferQueue.isEmpty()) {
+			transferQueue.get(0).a.exitingWorld(this);
+			transferQueue.get(0).a.setPosition(transferQueue.get(0).p);
+			transferQueue.get(0).d.addActor(transferQueue.get(0).a);
+			actors.remove(transferQueue.get(0).a);
+			transferQueue.remove(0);
 		}
 
 		physicsWorld.step(0.016f, 1, 1);
