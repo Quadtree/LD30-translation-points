@@ -2,6 +2,7 @@ package com.ironalloygames.ld30;
 
 import java.util.HashSet;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -62,7 +63,12 @@ public class Star extends Actor {
 
 		for (Actor a : inBurnRange) {
 			float ang = a.getPosition().sub(position).angleRad();
-			// System.out.println(ang + " " + a.getPosition().sub(position));
+			Color c = originalWorld.getColor();
+			c.a = MathUtils.clamp((BURN_RANGE - a.getPosition().dst(position)) / (BURN_RANGE / 3), 0, 1);
+			LD30.batch.setColor(c);
+
+			// System.out.println((BURN_RANGE - a.getPosition().dst(position)) /
+			// (BURN_RANGE / 3));
 			LD30.batch.draw(LD30.a.getSprite("tp_ray"), getPosition().x, getPosition().y, .5f, .5f, 1, 1, BURN_RANGE * 2, 128f / LD30.METER_SCALE, ang * MathUtils.radiansToDegrees);
 		}
 	}

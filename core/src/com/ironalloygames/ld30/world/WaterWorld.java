@@ -12,6 +12,11 @@ public class WaterWorld extends World {
 	}
 
 	@Override
+	public float getDragCoeff() {
+		return 0.9f;
+	}
+
+	@Override
 	public void renderBackground() {
 		super.renderBackground();
 

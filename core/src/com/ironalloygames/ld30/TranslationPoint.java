@@ -131,7 +131,7 @@ public class TranslationPoint extends Actor {
 						}
 					}
 
-					if (a.lastTranslationPoint != this)
+					if (a.lastTranslationPoint != this || (dist2 < (GRAB_RANGE * GRAB_RANGE)))
 						a.body.applyLinearImpulse(delta.scl(force).scl(GRAVITY_FORCE), a.body.getWorldCenter(), true);
 				}
 			}
