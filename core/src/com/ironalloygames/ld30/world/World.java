@@ -18,13 +18,15 @@ public abstract class World implements ContactListener {
 		Vector2 p;
 	}
 
+	public static float RADIUS = 500;
+
 	ArrayList<Actor> actorAddQueue = new ArrayList<Actor>();
 
 	ArrayList<Actor> actors = new ArrayList<Actor>();
 
 	public long milisDone;
-
 	public com.badlogic.gdx.physics.box2d.World physicsWorld;
+
 	ArrayList<Transfer> transferQueue = new ArrayList<World.Transfer>();
 
 	public World worldAbove;
@@ -63,8 +65,8 @@ public abstract class World implements ContactListener {
 		Object o2 = contact.getFixtureB().getBody().getUserData();
 
 		if (o1 instanceof Actor && o2 instanceof Actor) {
-			((Actor) o1).beginContact((Actor) o2);
-			((Actor) o2).beginContact((Actor) o1);
+			((Actor) o1).beginContact((Actor) o2, contact.getFixtureA());
+			((Actor) o2).beginContact((Actor) o1, contact.getFixtureB());
 		}
 	}
 
@@ -74,8 +76,8 @@ public abstract class World implements ContactListener {
 		Object o2 = contact.getFixtureB().getBody().getUserData();
 
 		if (o1 instanceof Actor && o2 instanceof Actor) {
-			((Actor) o1).endContact((Actor) o2);
-			((Actor) o2).endContact((Actor) o1);
+			((Actor) o1).endContact((Actor) o2, contact.getFixtureA());
+			((Actor) o2).endContact((Actor) o1, contact.getFixtureB());
 		}
 	}
 

@@ -1,6 +1,5 @@
 package com.ironalloygames.ld30;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -10,9 +9,12 @@ public class MiniShip extends Actor {
 
 	protected Vector2 dest;
 
-	protected int strafe = 0;
-	protected int thrust = 0;
+	float maxShield = 0;
+	float shield = 0;
 
+	protected int strafe = 0;
+
+	protected int thrust = 0;
 	protected int turn = 0;
 
 	@Override
@@ -32,9 +34,19 @@ public class MiniShip extends Actor {
 	@Override
 	public void render() {
 		super.render();
-		LD30.batch.setColor(Color.WHITE);
-		LD30.batch.draw(LD30.a.getSprite("mini_ship"), getPosition().x, getPosition().y, .5f, .5f, 1, 1, 37f / LD30.METER_SCALE * transPointScale, 37f / LD30.METER_SCALE * transPointScale, body.getAngle() * (180 / MathUtils.PI)
-				- 90);
+		drawDefault("mini_ship");
+	}
+
+	@Override
+	public void takeDamage(float damage) {
+
+		if (shield > 0) {
+			float absorb = Math.max(shield, damage);
+			damage -= absorb;
+			shield -= absorb;
+		}
+
+		super.takeDamage(damage);
 	}
 
 	@Override

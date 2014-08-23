@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ironalloygames.ld30.world.World;
 
@@ -32,8 +33,8 @@ public class TranslationPoint extends Actor {
 	}
 
 	@Override
-	public void beginContact(Actor other) {
-		super.beginContact(other);
+	public void beginContact(Actor other, Fixture localFixture) {
+		super.beginContact(other, localFixture);
 
 		if (other.isTranslatable())
 			inGravityWell.add(other);
@@ -48,8 +49,8 @@ public class TranslationPoint extends Actor {
 	}
 
 	@Override
-	public void endContact(Actor other) {
-		super.endContact(other);
+	public void endContact(Actor other, Fixture localFixture) {
+		super.endContact(other, localFixture);
 
 		inGravityWell.remove(other);
 
