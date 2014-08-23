@@ -11,6 +11,10 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 	boolean braking = false;
 
 	Vector2 currentMousePos = new Vector2();
+	Vector2 currentMouseScreenPos = new Vector2();
+	boolean strafeLeft = false;
+
+	boolean strafeRight = false;
 	boolean thrusting = false;
 
 	@Override
@@ -28,6 +32,12 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 
 		if (keycode == Keys.DOWN || keycode == Keys.S)
 			braking = true;
+
+		if (keycode == Keys.LEFT || keycode == Keys.A)
+			strafeLeft = true;
+
+		if (keycode == Keys.RIGHT || keycode == Keys.D)
+			strafeRight = true;
 
 		return false;
 	}
@@ -47,6 +57,12 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 		if (keycode == Keys.DOWN || keycode == Keys.S)
 			braking = false;
 
+		if (keycode == Keys.LEFT || keycode == Keys.A)
+			strafeLeft = false;
+
+		if (keycode == Keys.RIGHT || keycode == Keys.D)
+			strafeRight = false;
+
 		return false;
 	}
 
@@ -64,14 +80,10 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 
 	private void setMousePos(int screenX, int screenY) {
 
-		Vector3 v3 = new Vector3((float) screenX / Gdx.graphics.getWidth() * 2 - 1, (float) (Gdx.graphics.getHeight() - screenY) / Gdx.graphics.getHeight() * 2 - 1, 0);
+		currentMouseScreenPos.x = screenX;
+		currentMouseScreenPos.y = screenY;
 
-		v3.mul(LD30.cam.invProjectionView);
-
-		currentMousePos.x = v3.x;
-		currentMousePos.y = v3.y;
-
-		System.out.println(currentMousePos);
+		updateMousePos();
 	}
 
 	@Override
@@ -104,7 +116,26 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 			thrust = 0;
 		}
 
+		strafe = 0;
+
+		if (strafeLeft && !strafeRight)
+			strafe = -1;
+		if (!strafeLeft && strafeRight)
+			strafe = 1;
+
+		updateMousePos();
 		dest = currentMousePos.cpy();
+	}
+
+	private void updateMousePos() {
+		Vector3 v3 = new Vector3(currentMouseScreenPos.x / Gdx.graphics.getWidth() * 2 - 1, (Gdx.graphics.getHeight() - currentMouseScreenPos.y) / Gdx.graphics.getHeight() * 2 - 1, 0);
+
+		v3.mul(LD30.cam.invProjectionView);
+
+		currentMousePos.x = v3.x;
+		currentMousePos.y = v3.y;
+
+		System.out.println(currentMousePos);
 	}
 
 }

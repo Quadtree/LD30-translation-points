@@ -8,6 +8,7 @@ public class MiniShip extends Actor {
 
 	protected Vector2 dest;
 
+	protected int strafe = 0;
 	protected int thrust = 0;
 
 	protected int turn = 0;
@@ -30,7 +31,7 @@ public class MiniShip extends Actor {
 	public void render() {
 		super.render();
 
-		LD30.batch.draw(LD30.a.getSprite("mini_ship"), body.getPosition().x, body.getPosition().y, .5f, .5f, 1, 1, 37f / LD30.METER_SCALE, 37f / LD30.METER_SCALE, body.getAngle() * (180 / MathUtils.PI) - 90);
+		LD30.batch.draw(LD30.a.getSprite("mini_ship"), getPosition().x, getPosition().y, .5f, .5f, 1, 1, 37f / LD30.METER_SCALE, 37f / LD30.METER_SCALE, body.getAngle() * (180 / MathUtils.PI) - 90);
 	}
 
 	@Override
@@ -57,9 +58,19 @@ public class MiniShip extends Actor {
 			body.setSleepingAllowed(false);
 			body.setAngularVelocity(turn * 6);
 
+			body.applyLinearImpulse(new Vector2(MathUtils.cos(getAngle() - MathUtils.PI / 2) * getEnginePower() * strafe, MathUtils.sin(getAngle() - MathUtils.PI / 2) * getEnginePower() * strafe), body.getWorldCenter(), true);
+
 			if (thrust == 1) {
 				body.applyLinearImpulse(new Vector2(MathUtils.cos(getAngle()) * getEnginePower(), MathUtils.sin(getAngle()) * getEnginePower()), body.getWorldCenter(), true);
+			} else if (thrust == -1) {
+				Vector2 curVel = body.getLinearVelocity().cpy();
+				float pwr = Math.min(curVel.len() * body.getMass(), getEnginePower());
+				curVel.nor();
+
+				body.applyLinearImpulse(curVel.scl(-pwr), body.getWorldCenter(), true);
+
 			}
+
 		}
 	}
 

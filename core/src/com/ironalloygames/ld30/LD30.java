@@ -32,6 +32,8 @@ public class LD30 extends ApplicationAdapter {
 		currentWorld = new StartWorld();
 		currentWorld.addActor(pc);
 		currentWorld.addActor(new MiniShip());
+
+		cam = new OrthographicCamera(1024 / METER_SCALE, 768 / METER_SCALE);
 	}
 
 	@Override
@@ -41,13 +43,10 @@ public class LD30 extends ApplicationAdapter {
 
 		currentWorld.renderBackground();
 
-		cam = new OrthographicCamera(1024 / METER_SCALE, 768 / METER_SCALE);
+		// System.out.println("PP " + cam.position);
 		cam.position.x = pc.getPosition().x;
 		cam.position.y = pc.getPosition().y;
 		cam.update();
-
-		// System.out.println("PP " + cam.position);
-
 		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
 		// batch.draw(a.getSprite("mini_ship"), 0, 0, .5f, .5f, 1, 1, 32, 32,

@@ -73,6 +73,8 @@ public abstract class World implements ContactListener {
 			actorAddQueue.remove(0);
 		}
 
+		physicsWorld.step(0.016f, 1, 1);
+
 		for (int i = 0; i < actors.size(); i++) {
 			if (actors.get(i).keep()) {
 				actors.get(i).update();
@@ -83,7 +85,6 @@ public abstract class World implements ContactListener {
 			}
 		}
 
-		physicsWorld.step(0.016f, 1, 1);
 	}
 
 	public void updateIfNeeded() {
