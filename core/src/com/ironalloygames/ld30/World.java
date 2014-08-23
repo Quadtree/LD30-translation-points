@@ -12,11 +12,14 @@ public abstract class World implements ContactListener {
 	ArrayList<Actor> actorAddQueue = new ArrayList<Actor>();
 
 	ArrayList<Actor> actors = new ArrayList<Actor>();
+
+	public long milisDone;
 	public com.badlogic.gdx.physics.box2d.World physicsWorld;
 
 	public World() {
 		physicsWorld = new com.badlogic.gdx.physics.box2d.World(new Vector2(0,
 				0), true);
+		milisDone = System.currentTimeMillis();
 	}
 
 	public void addActor(Actor a) {
@@ -59,7 +62,18 @@ public abstract class World implements ContactListener {
 		}
 	}
 
-	public void update() {
+	public void renderBackground() {
+
+	}
+
+	protected void update() {
+
+		while (!actorAddQueue.isEmpty()) {
+			actorAddQueue.get(0).enteringWorld(this);
+			actors.add(actorAddQueue.get(0));
+			actorAddQueue.remove(0);
+		}
+
 		for (int i = 0; i < actors.size(); i++) {
 			if (actors.get(i).keep()) {
 				actors.get(i).update();
@@ -68,6 +82,13 @@ public abstract class World implements ContactListener {
 				actors.get(i).destroyed();
 				actors.remove(i--);
 			}
+		}
+	}
+
+	public void updateIfNeeded() {
+		while (milisDone < System.currentTimeMillis()) {
+			update();
+			milisDone += 16;
 		}
 	}
 }

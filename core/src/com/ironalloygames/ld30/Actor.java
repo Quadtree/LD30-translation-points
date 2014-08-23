@@ -9,6 +9,10 @@ public class Actor {
 	Vector2 position;
 	World world;
 
+	public Actor() {
+		position = new Vector2(0, 0);
+	}
+
 	public void beginContact(Actor other) {
 
 	}
@@ -39,7 +43,10 @@ public class Actor {
 	}
 
 	public Vector2 getPosition() {
-		return position.cpy();
+		if (position != null)
+			return position.cpy();
+		else
+			return null;
 	}
 
 	public boolean keep() {
@@ -54,5 +61,6 @@ public class Actor {
 	}
 
 	public void update() {
+		position = body.getPosition().cpy();
 	}
 }
