@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public class LD30 extends ApplicationAdapter {
 	public static Assets a;
@@ -26,9 +27,11 @@ public class LD30 extends ApplicationAdapter {
 		a = new Assets();
 
 		pc = new PlayerMiniShip();
+		pc.setPosition(new Vector2(40, 40));
 
 		currentWorld = new StartWorld();
 		currentWorld.addActor(pc);
+		currentWorld.addActor(new MiniShip());
 	}
 
 	@Override

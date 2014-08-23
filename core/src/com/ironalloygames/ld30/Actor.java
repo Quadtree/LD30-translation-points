@@ -67,6 +67,8 @@ public class Actor {
 
 	public void setPosition(Vector2 pos) {
 		this.position = pos.cpy();
+		if (body != null)
+			body.setTransform(pos.cpy(), getAngle());
 	}
 
 	public void update() {
