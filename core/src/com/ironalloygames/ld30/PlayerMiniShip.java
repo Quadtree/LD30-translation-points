@@ -1,13 +1,17 @@
 package com.ironalloygames.ld30;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class PlayerMiniShip extends MiniShip implements InputProcessor {
 
+	boolean braking = false;
+
 	Vector2 currentMousePos = new Vector2();
+	boolean thrusting = false;
 
 	@Override
 	public void enteringWorld(World world) {
@@ -18,7 +22,13 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
+
+		if (keycode == Keys.UP || keycode == Keys.W)
+			thrusting = true;
+
+		if (keycode == Keys.DOWN || keycode == Keys.S)
+			braking = true;
+
 		return false;
 	}
 
@@ -30,7 +40,13 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
+
+		if (keycode == Keys.UP || keycode == Keys.W)
+			thrusting = false;
+
+		if (keycode == Keys.DOWN || keycode == Keys.S)
+			braking = false;
+
 		return false;
 	}
 
@@ -79,6 +95,14 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 	@Override
 	public void update() {
 		super.update();
+
+		if (thrusting && !braking) {
+			thrust = 1;
+		} else if (braking) {
+			thrust = -1;
+		} else {
+			thrust = 0;
+		}
 
 		dest = currentMousePos.cpy();
 	}

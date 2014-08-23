@@ -9,6 +9,7 @@ public class MiniShip extends Actor {
 	protected Vector2 dest;
 
 	protected int thrust = 0;
+
 	protected int turn = 0;
 
 	@Override
@@ -19,6 +20,10 @@ public class MiniShip extends Actor {
 		cs.setRadius(37f / LD30.METER_SCALE / 2);
 
 		body.createFixture(cs, 1);
+	}
+
+	protected float getEnginePower() {
+		return 90;
 	}
 
 	@Override
@@ -48,11 +53,13 @@ public class MiniShip extends Actor {
 				turn = -1;
 		}
 
-		System.out.println(turn);
-
 		if (body != null) {
 			body.setSleepingAllowed(false);
 			body.setAngularVelocity(turn * 6);
+
+			if (thrust == 1) {
+				body.applyLinearImpulse(new Vector2(MathUtils.cos(getAngle()) * getEnginePower(), MathUtils.sin(getAngle()) * getEnginePower()), body.getWorldCenter(), true);
+			}
 		}
 	}
 
