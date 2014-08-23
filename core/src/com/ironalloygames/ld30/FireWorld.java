@@ -15,7 +15,7 @@ public class FireWorld extends World {
 	public void renderBackground() {
 		super.renderBackground();
 
-		Gdx.gl.glClearColor(.4f, .25f, 0, 1);
+		Gdx.gl.glClearColor(.4f, .15f, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
 

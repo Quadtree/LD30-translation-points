@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 public class Actor {
 	float angle;
 	Body body;
+	public TranslationPoint immuneTranslationPoint;
 	public TranslationPoint lastTranslationPoint;
 	Vector2 position;
 	Vector2 velocity;

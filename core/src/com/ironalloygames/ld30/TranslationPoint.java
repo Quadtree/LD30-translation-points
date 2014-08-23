@@ -18,8 +18,9 @@ public class TranslationPoint extends Actor {
 	public void beginContact(Actor other) {
 		super.beginContact(other);
 
-		if (other.isTranslatable() && other.lastTranslationPoint != this) {
+		if (other.isTranslatable() && other.immuneTranslationPoint != this) {
 			other.lastTranslationPoint = this.otherEnd;
+			other.immuneTranslationPoint = this.otherEnd;
 			other.world.transferActor(other, destination, otherEnd.getPosition());
 		}
 	}
@@ -28,8 +29,8 @@ public class TranslationPoint extends Actor {
 	public void endContact(Actor other) {
 		super.endContact(other);
 
-		if (other.lastTranslationPoint == this)
-			other.lastTranslationPoint = null;
+		if (other.immuneTranslationPoint == this)
+			other.immuneTranslationPoint = null;
 	}
 
 	@Override
