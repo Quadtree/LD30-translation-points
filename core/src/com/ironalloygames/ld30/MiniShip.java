@@ -1,5 +1,6 @@
 package com.ironalloygames.ld30;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -30,7 +31,7 @@ public class MiniShip extends Actor {
 	@Override
 	public void render() {
 		super.render();
-
+		LD30.batch.setColor(Color.WHITE);
 		LD30.batch.draw(LD30.a.getSprite("mini_ship"), getPosition().x, getPosition().y, .5f, .5f, 1, 1, 37f / LD30.METER_SCALE, 37f / LD30.METER_SCALE, body.getAngle() * (180 / MathUtils.PI) - 90);
 	}
 

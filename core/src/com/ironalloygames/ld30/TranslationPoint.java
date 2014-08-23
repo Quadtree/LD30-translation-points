@@ -1,5 +1,6 @@
 package com.ironalloygames.ld30;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 
 public class TranslationPoint extends Actor {
@@ -26,8 +27,11 @@ public class TranslationPoint extends Actor {
 	@Override
 	public void render() {
 		super.render();
-
-		LD30.batch.draw(LD30.a.getSprite("tp_ray"), getPosition().x, getPosition().y, .5f, .5f, 1, 1, 128f / LD30.METER_SCALE, 128f / LD30.METER_SCALE, body.getAngle() * (180 / MathUtils.PI) - 90);
+		Sprite raySprite = LD30.a.getSprite("tp_ray");
+		LD30.batch.setColor(destination.getColor());
+		for (int i = 0; i < 8; i++) {
+			LD30.batch.draw(raySprite, getPosition().x, getPosition().y, .5f, .5f, 1, 1, 128f / LD30.METER_SCALE * MathUtils.random(), 128f / LD30.METER_SCALE * MathUtils.random(), MathUtils.random(0, 360));
+		}
 	}
 
 }
