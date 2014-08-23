@@ -2,6 +2,7 @@ package com.ironalloygames.ld30;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -16,6 +17,10 @@ public abstract class World implements ContactListener {
 	public long milisDone;
 	public com.badlogic.gdx.physics.box2d.World physicsWorld;
 
+	public World worldAbove;
+
+	public World worldBelow;
+
 	public World() {
 		physicsWorld = new com.badlogic.gdx.physics.box2d.World(new Vector2(0, 0), true);
 		milisDone = System.currentTimeMillis();
@@ -23,6 +28,19 @@ public abstract class World implements ContactListener {
 
 	public void addActor(Actor a) {
 		actorAddQueue.add(a);
+	}
+
+	public void addTranslationPoint(Vector2 pos, World destination) {
+		TranslationPoint localEnd = new TranslationPoint(destination);
+		TranslationPoint remoteEnd = new TranslationPoint(this);
+		localEnd.otherEnd = remoteEnd;
+		remoteEnd.otherEnd = localEnd;
+
+		localEnd.setPosition(pos);
+		remoteEnd.setPosition(pos.cpy().scl(1f / getScale()).scl(destination.getScale()));
+
+		addActor(localEnd);
+		destination.addActor(remoteEnd);
 	}
 
 	@Override
@@ -45,6 +63,14 @@ public abstract class World implements ContactListener {
 			((Actor) o1).endContact((Actor) o2);
 			((Actor) o2).endContact((Actor) o1);
 		}
+	}
+
+	public Color getColor() {
+		return new Color(1, 1, 1, 1);
+	}
+
+	public float getScale() {
+		return 1;
 	}
 
 	@Override

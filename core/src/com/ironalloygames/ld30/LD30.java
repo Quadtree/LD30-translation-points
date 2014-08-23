@@ -33,6 +33,12 @@ public class LD30 extends ApplicationAdapter {
 		currentWorld.addActor(pc);
 		currentWorld.addActor(new MiniShip());
 
+		FireWorld fireWorld = new FireWorld();
+		currentWorld.worldAbove = fireWorld;
+		fireWorld.worldBelow = currentWorld;
+
+		currentWorld.addTranslationPoint(new Vector2(60, 60), fireWorld);
+
 		cam = new OrthographicCamera(1024 / METER_SCALE, 768 / METER_SCALE);
 	}
 
