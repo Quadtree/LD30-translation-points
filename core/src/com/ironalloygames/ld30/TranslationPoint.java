@@ -21,9 +21,11 @@ public class TranslationPoint extends Actor {
 	public World destination;
 
 	Set<Actor> inGravityWell = new HashSet<Actor>();
-	public int lifespan = Integer.MAX_VALUE;
 
+	public int lifespan = Integer.MAX_VALUE;
 	public TranslationPoint otherEnd;
+
+	int spawnStatus = 0;
 
 	public TranslationPoint(World destination) {
 		this.destination = destination;
@@ -90,6 +92,10 @@ public class TranslationPoint extends Actor {
 			c.a = lifespan / 60f;
 		}
 
+		if (spawnStatus < 60) {
+			c.a = spawnStatus / 60f;
+		}
+
 		Sprite raySprite = LD30.a.getSprite("tp_ray");
 		LD30.batch.setColor(c);
 		for (int i = 0; i < 8; i++) {
@@ -101,34 +107,37 @@ public class TranslationPoint extends Actor {
 	public void update() {
 		super.update();
 
-		for (Actor a : inGravityWell) {
-			if (a.body != null && a.immuneTranslationPoint != this) {
-				Vector2 delta = getPosition().sub(a.body.getPosition());
-				float dist2 = delta.len2();
-				float force = ((GRAVITY_RANGE * GRAVITY_RANGE) - delta.len2()) / (GRAVITY_RANGE * GRAVITY_RANGE);
-				delta.nor();
+		if (spawnStatus >= 60) {
+			for (Actor a : inGravityWell) {
+				if (a.body != null && a.immuneTranslationPoint != this) {
+					Vector2 delta = getPosition().sub(a.body.getPosition());
+					float dist2 = delta.len2();
+					float force = ((GRAVITY_RANGE * GRAVITY_RANGE) - delta.len2()) / (GRAVITY_RANGE * GRAVITY_RANGE);
+					delta.nor();
 
-				if (dist2 < (GRAB_RANGE * GRAB_RANGE)) {
-					Vector2 vel = a.body.getLinearVelocity();
+					if (dist2 < (GRAB_RANGE * GRAB_RANGE)) {
+						Vector2 vel = a.body.getLinearVelocity();
 
-					a.body.setLinearVelocity(delta.cpy().scl(vel.len()));
+						a.body.setLinearVelocity(delta.cpy().scl(vel.len()));
 
-					float pt = (float) Math.sqrt(dist2) / GRAB_RANGE;
-					a.transPointScale = pt;
+						float pt = (float) Math.sqrt(dist2) / GRAB_RANGE;
+						a.transPointScale = pt;
 
-					if (dist2 < JUMP_RANGE * JUMP_RANGE || Math.sqrt(dist2) < vel.len() / 60) {
-						a.lastTranslationPoint = this.otherEnd;
-						a.immuneTranslationPoint = this.otherEnd;
-						a.world.transferActor(a, destination, otherEnd.getPosition());
+						if (dist2 < JUMP_RANGE * JUMP_RANGE || Math.sqrt(dist2) < vel.len() / 60) {
+							a.lastTranslationPoint = this.otherEnd;
+							a.immuneTranslationPoint = this.otherEnd;
+							a.world.transferActor(a, destination, otherEnd.getPosition());
+						}
 					}
-				}
 
-				if (a.lastTranslationPoint != this)
-					a.body.applyLinearImpulse(delta.scl(force).scl(GRAVITY_FORCE), a.body.getWorldCenter(), true);
+					if (a.lastTranslationPoint != this)
+						a.body.applyLinearImpulse(delta.scl(force).scl(GRAVITY_FORCE), a.body.getWorldCenter(), true);
+				}
 			}
 		}
 
 		lifespan--;
+		spawnStatus++;
 	}
 
 }

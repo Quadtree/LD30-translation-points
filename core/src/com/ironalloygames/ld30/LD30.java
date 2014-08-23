@@ -8,7 +8,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ld30.world.FireWorld;
+import com.ironalloygames.ld30.world.Happyspace;
+import com.ironalloygames.ld30.world.Hyperspace;
+import com.ironalloygames.ld30.world.NegativeWorld;
 import com.ironalloygames.ld30.world.StartWorld;
+import com.ironalloygames.ld30.world.Subspace;
+import com.ironalloygames.ld30.world.WaterWorld;
 import com.ironalloygames.ld30.world.World;
 
 public class LD30 extends ApplicationAdapter {
@@ -35,18 +40,31 @@ public class LD30 extends ApplicationAdapter {
 		pc = new PlayerMiniShip();
 		pc.setPosition(new Vector2(40, 40));
 
-		currentWorld = new StartWorld();
+		worlds.add(new StartWorld());
+		worlds.add(new FireWorld());
+		worlds.add(new Happyspace());
+		worlds.add(new Hyperspace());
+		worlds.add(new Subspace());
+		worlds.add(new WaterWorld());
+		worlds.add(new NegativeWorld());
+
+		currentWorld = worlds.get(0);
 		currentWorld.addActor(pc);
 		currentWorld.addActor(new MiniShip());
 
-		FireWorld fireWorld = new FireWorld();
-		currentWorld.worldAbove = fireWorld;
-		fireWorld.worldBelow = currentWorld;
+		for (int i = 0; i < worlds.size(); i++) {
+			if (i < worlds.size() - 1) {
+				worlds.get(i).worldAbove = worlds.get(i + 1);
+			} else {
+				worlds.get(i).worldAbove = worlds.get(0);
+			}
 
-		worlds.add(currentWorld);
-		worlds.add(fireWorld);
-
-		currentWorld.addTranslationPoint(new Vector2(60, 60), fireWorld, Integer.MAX_VALUE);
+			if (i > 0) {
+				worlds.get(i).worldBelow = worlds.get(i - 1);
+			} else {
+				worlds.get(i).worldBelow = worlds.get(worlds.size() - 1);
+			}
+		}
 
 		cam = new OrthographicCamera(1024 / METER_SCALE, 768 / METER_SCALE);
 	}
