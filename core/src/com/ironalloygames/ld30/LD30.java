@@ -1,5 +1,7 @@
 package com.ironalloygames.ld30;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,10 +16,11 @@ public class LD30 extends ApplicationAdapter {
 	public static PlayerMiniShip pc;
 
 	World currentWorld;
-
 	Texture img;
 
 	float r = 0;
+
+	ArrayList<World> worlds = new ArrayList<World>();
 
 	@Override
 	public void create() {
@@ -37,6 +40,9 @@ public class LD30 extends ApplicationAdapter {
 		currentWorld.worldAbove = fireWorld;
 		fireWorld.worldBelow = currentWorld;
 
+		worlds.add(currentWorld);
+		worlds.add(fireWorld);
+
 		currentWorld.addTranslationPoint(new Vector2(60, 60), fireWorld);
 
 		cam = new OrthographicCamera(1024 / METER_SCALE, 768 / METER_SCALE);
@@ -45,7 +51,11 @@ public class LD30 extends ApplicationAdapter {
 	@Override
 	public void render() {
 
-		currentWorld.updateIfNeeded();
+		for (World w : worlds) {
+			w.updateIfNeeded();
+		}
+
+		currentWorld = pc.world;
 
 		currentWorld.renderBackground();
 

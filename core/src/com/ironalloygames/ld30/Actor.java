@@ -5,14 +5,17 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 
 public class Actor {
+	float angle;
 	Body body;
 	public TranslationPoint lastTranslationPoint;
 	Vector2 position;
+	Vector2 velocity;
 
 	public World world;
 
 	public Actor() {
 		position = new Vector2(0, 0);
+		velocity = new Vector2(0, 0);
 	}
 
 	public void beginContact(Actor other) {
@@ -32,6 +35,8 @@ public class Actor {
 		BodyDef bd = new BodyDef();
 		bd.type = BodyDef.BodyType.DynamicBody;
 		bd.position.set(position);
+		bd.linearVelocity.set(velocity);
+		bd.angle = angle;
 
 		body = world.physicsWorld.createBody(bd);
 		body.setUserData(this);
@@ -49,7 +54,7 @@ public class Actor {
 		if (body != null) {
 			return body.getAngle();
 		} else {
-			return 0;
+			return angle;
 		}
 	}
 
@@ -79,5 +84,7 @@ public class Actor {
 
 	public void update() {
 		position = body.getPosition().cpy();
+		velocity = body.getLinearVelocity().cpy();
+		angle = body.getAngle();
 	}
 }

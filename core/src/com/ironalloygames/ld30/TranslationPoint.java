@@ -26,8 +26,10 @@ public class TranslationPoint extends Actor {
 
 	@Override
 	public void endContact(Actor other) {
-		// TODO Auto-generated method stub
 		super.endContact(other);
+
+		if (other.lastTranslationPoint == this)
+			other.lastTranslationPoint = null;
 	}
 
 	@Override
