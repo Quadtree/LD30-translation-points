@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.ironalloygames.ld30.world.FireWorld;
+import com.ironalloygames.ld30.world.StartWorld;
+import com.ironalloygames.ld30.world.World;
 
 public class LD30 extends ApplicationAdapter {
 	public static Assets a;
@@ -43,7 +46,7 @@ public class LD30 extends ApplicationAdapter {
 		worlds.add(currentWorld);
 		worlds.add(fireWorld);
 
-		currentWorld.addTranslationPoint(new Vector2(60, 60), fireWorld);
+		currentWorld.addTranslationPoint(new Vector2(60, 60), fireWorld, Integer.MAX_VALUE);
 
 		cam = new OrthographicCamera(1024 / METER_SCALE, 768 / METER_SCALE);
 	}
@@ -59,16 +62,11 @@ public class LD30 extends ApplicationAdapter {
 
 		currentWorld.renderBackground();
 
-		// System.out.println("PP " + cam.position);
 		cam.position.x = pc.getPosition().x;
 		cam.position.y = pc.getPosition().y;
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
-		// batch.draw(a.getSprite("mini_ship"), 0, 0, .5f, .5f, 1, 1, 32, 32,
-		// r);
-		// r++;
-		// batch.draw(a.getSprite("mini_ship"), 0, 0);
 
 		currentWorld.render();
 

@@ -1,10 +1,12 @@
 package com.ironalloygames.ld30;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.ironalloygames.ld30.world.World;
 
 public class PlayerMiniShip extends MiniShip implements InputProcessor {
 
@@ -89,6 +91,15 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		setMousePos(screenX, screenY);
+
+		if (button == Buttons.LEFT && world.worldAbove != null) {
+			world.addTranslationPoint(currentMousePos, world.worldAbove, 600);
+		}
+
+		if (button == Buttons.RIGHT && world.worldBelow != null) {
+			world.addTranslationPoint(currentMousePos, world.worldBelow, 600);
+		}
+
 		return false;
 	}
 

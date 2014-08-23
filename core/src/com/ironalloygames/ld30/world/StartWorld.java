@@ -1,4 +1,4 @@
-package com.ironalloygames.ld30;
+package com.ironalloygames.ld30.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;

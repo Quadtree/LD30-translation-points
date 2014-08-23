@@ -1,4 +1,4 @@
-package com.ironalloygames.ld30;
+package com.ironalloygames.ld30.world;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.ironalloygames.ld30.Actor;
+import com.ironalloygames.ld30.TranslationPoint;
 
 public abstract class World implements ContactListener {
 	class Transfer {
@@ -39,7 +41,7 @@ public abstract class World implements ContactListener {
 		actorAddQueue.add(a);
 	}
 
-	public void addTranslationPoint(Vector2 pos, World destination) {
+	public void addTranslationPoint(Vector2 pos, World destination, int lifespan) {
 		TranslationPoint localEnd = new TranslationPoint(destination);
 		TranslationPoint remoteEnd = new TranslationPoint(this);
 		localEnd.otherEnd = remoteEnd;
@@ -50,6 +52,9 @@ public abstract class World implements ContactListener {
 
 		addActor(localEnd);
 		destination.addActor(remoteEnd);
+
+		localEnd.lifespan = lifespan;
+		remoteEnd.lifespan = lifespan;
 	}
 
 	@Override

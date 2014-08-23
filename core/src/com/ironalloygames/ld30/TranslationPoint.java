@@ -3,11 +3,13 @@ package com.ironalloygames.ld30;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.ironalloygames.ld30.world.World;
 
 public class TranslationPoint extends Actor {
 
@@ -17,7 +19,9 @@ public class TranslationPoint extends Actor {
 	private static final float JUMP_RANGE = .2f;
 
 	public World destination;
+
 	Set<Actor> inGravityWell = new HashSet<Actor>();
+	public int lifespan = Integer.MAX_VALUE;
 
 	public TranslationPoint otherEnd;
 
@@ -29,7 +33,8 @@ public class TranslationPoint extends Actor {
 	public void beginContact(Actor other) {
 		super.beginContact(other);
 
-		inGravityWell.add(other);
+		if (other.isTranslatable())
+			inGravityWell.add(other);
 
 		/*
 		 * if (other.isTranslatable() && other.immuneTranslationPoint != this) {
@@ -71,10 +76,22 @@ public class TranslationPoint extends Actor {
 	}
 
 	@Override
+	public boolean keep() {
+		return super.keep() && lifespan >= 0;
+
+	}
+
+	@Override
 	public void render() {
 		super.render();
+		Color c = destination.getColor();
+
+		if (lifespan < 60) {
+			c.a = lifespan / 60f;
+		}
+
 		Sprite raySprite = LD30.a.getSprite("tp_ray");
-		LD30.batch.setColor(destination.getColor());
+		LD30.batch.setColor(c);
 		for (int i = 0; i < 8; i++) {
 			LD30.batch.draw(raySprite, getPosition().x, getPosition().y, .5f, .5f, 1, 1, 128f / LD30.METER_SCALE * MathUtils.random(), 128f / LD30.METER_SCALE * MathUtils.random(), MathUtils.random(0, 360));
 		}
@@ -110,6 +127,8 @@ public class TranslationPoint extends Actor {
 					a.body.applyLinearImpulse(delta.scl(force).scl(GRAVITY_FORCE), a.body.getWorldCenter(), true);
 			}
 		}
+
+		lifespan--;
 	}
 
 }
