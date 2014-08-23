@@ -1,19 +1,19 @@
 
 pack.png
-size: 130,196
+size: 130,169
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 mini_ship
   rotate: false
   xy: 2, 2
-  size: 64, 64
-  orig: 64, 64
+  size: 37, 37
+  orig: 37, 37
   offset: 0, 0
   index: -1
 tp_ray
   rotate: false
-  xy: 2, 68
+  xy: 2, 41
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
