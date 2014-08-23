@@ -10,6 +10,8 @@ public class Actor {
 	public TranslationPoint immuneTranslationPoint;
 	public TranslationPoint lastTranslationPoint;
 	Vector2 position;
+	public float transPointScale = 1;
+
 	Vector2 velocity;
 
 	public World world;
@@ -87,5 +89,15 @@ public class Actor {
 		position = body.getPosition().cpy();
 		velocity = body.getLinearVelocity().cpy();
 		angle = body.getAngle();
+
+		if (immuneTranslationPoint != null) {
+			float dist = immuneTranslationPoint.position.dst(position);
+
+			if (dist < TranslationPoint.GRAB_RANGE) {
+				this.transPointScale = (dist / TranslationPoint.GRAB_RANGE);
+			} else {
+				immuneTranslationPoint = null;
+			}
+		}
 	}
 }

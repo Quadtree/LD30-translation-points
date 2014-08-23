@@ -32,7 +32,8 @@ public class MiniShip extends Actor {
 	public void render() {
 		super.render();
 		LD30.batch.setColor(Color.WHITE);
-		LD30.batch.draw(LD30.a.getSprite("mini_ship"), getPosition().x, getPosition().y, .5f, .5f, 1, 1, 37f / LD30.METER_SCALE, 37f / LD30.METER_SCALE, body.getAngle() * (180 / MathUtils.PI) - 90);
+		LD30.batch.draw(LD30.a.getSprite("mini_ship"), getPosition().x, getPosition().y, .5f, .5f, 1, 1, 37f / LD30.METER_SCALE * transPointScale, 37f / LD30.METER_SCALE * transPointScale, body.getAngle() * (180 / MathUtils.PI)
+				- 90);
 	}
 
 	@Override
@@ -71,7 +72,6 @@ public class MiniShip extends Actor {
 				body.applyLinearImpulse(curVel.scl(-pwr), body.getWorldCenter(), true);
 
 			}
-
 		}
 	}
 
