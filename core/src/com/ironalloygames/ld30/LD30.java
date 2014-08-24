@@ -22,7 +22,12 @@ public class LD30 extends ApplicationAdapter {
 	public static SpriteBatch batch;
 	public static OrthographicCamera cam;
 	public static final float METER_SCALE = 5f;
+
+	public static Mothership mothership = null;
+	public static MothershipEngine mothershipEngine = null;
+
 	public static PlayerMiniShip pc;
+
 	public static ShapeRenderer sr;
 
 	World currentWorld;

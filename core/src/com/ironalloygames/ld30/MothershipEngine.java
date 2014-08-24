@@ -9,6 +9,13 @@ public class MothershipEngine extends Actor {
 
 	public MothershipEngine() {
 		angle = MathUtils.PI / 2;
+		LD30.mothershipEngine = this;
+	}
+
+	@Override
+	public void destroyed() {
+		super.destroyed();
+		LD30.mothershipEngine = null;
 	}
 
 	@Override

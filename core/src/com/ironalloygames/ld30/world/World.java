@@ -83,6 +83,16 @@ public abstract class World implements ContactListener {
 		}
 	}
 
+	public TranslationPoint findTranslationPointTo(World otherWorld) {
+		for (Actor a : actors) {
+			if (a instanceof TranslationPoint && ((TranslationPoint) a).destination == otherWorld) {
+				return (TranslationPoint) a;
+			}
+		}
+
+		return null;
+	}
+
 	public boolean fixPosition(Vector2 pos) {
 
 		boolean fixed = false;

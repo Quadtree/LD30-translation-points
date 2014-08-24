@@ -15,6 +15,7 @@ public class Mothership extends Actor {
 
 	public Mothership() {
 		angle = MathUtils.PI / 2;
+		LD30.mothership = this;
 	}
 
 	public void detachEngine() {
