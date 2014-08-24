@@ -4,6 +4,9 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.ironalloygames.ld30.world.World;
 
 public class HunterKiller extends Actor {
+	public static float WEAPON_RANGE = 200;
+	int shotCooldown = 0;
+
 	public HunterKiller() {
 		hp = 2;
 	}
@@ -23,5 +26,19 @@ public class HunterKiller extends Actor {
 		super.render();
 
 		drawDefault("star1");
+	}
+
+	@Override
+	public void update() {
+		super.update();
+
+		shotCooldown--;
+
+		if (LD30.pc != null && LD30.pc.world == world && LD30.pc.position.dst2(position) < WEAPON_RANGE * WEAPON_RANGE) {
+			if (shotCooldown <= 0) {
+				Bolt.shoot(this, getPosition(), LD30.pc.position.cpy().sub(position).angleRad(), 600, 0.5f);
+				shotCooldown = 90;
+			}
+		}
 	}
 }

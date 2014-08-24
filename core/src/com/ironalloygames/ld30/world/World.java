@@ -173,6 +173,10 @@ public abstract class World implements ContactListener {
 		transferQueue.add(t);
 	}
 
+	protected void transferred(Actor a) {
+
+	}
+
 	protected void update() {
 
 		while (!actorAddQueue.isEmpty()) {
@@ -188,6 +192,8 @@ public abstract class World implements ContactListener {
 
 			if (transferQueue.get(0).a == LD30.pc)
 				LD30.needToCreateSpaceDust = true;
+
+			transferred(transferQueue.get(0).a);
 
 			actors.remove(transferQueue.get(0).a);
 			transferQueue.remove(0);

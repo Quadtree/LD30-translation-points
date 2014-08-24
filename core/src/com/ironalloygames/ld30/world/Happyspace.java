@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.ironalloygames.ld30.Actor;
 import com.ironalloygames.ld30.HappyFlower;
 import com.ironalloygames.ld30.HappyOrb;
 
@@ -36,6 +37,14 @@ public class Happyspace extends World {
 
 		Gdx.gl.glClearColor(0, .45f, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	}
+
+	@Override
+	protected void transferred(Actor a) {
+		super.transferred(a);
+
+		if (a instanceof HappyOrb || a instanceof HappyFlower)
+			aggroed = true;
 	}
 
 }

@@ -12,6 +12,8 @@ public class EnemyMiniShip extends MiniShip {
 
 	int pointCreationCooldown = 0;
 
+	int shotCooldown = 0;
+
 	int startDelay = 140;
 
 	int timeWithoutEngine = 1000;
@@ -64,6 +66,11 @@ public class EnemyMiniShip extends MiniShip {
 
 		if (pt != null)
 			moveTowardsPoint(pt.position);
+	}
+
+	@Override
+	protected short getColGroup() {
+		return -7;
 	}
 
 	@Override
@@ -137,9 +144,15 @@ public class EnemyMiniShip extends MiniShip {
 		pointCreationCooldown--;
 		lastThreat--;
 		thrust = -1;
+		shotCooldown--;
 
 		if (LD30.pc != null && LD30.pc.world == this.world && LD30.pc.position.dst2(position) < WEAPON_RANGE * WEAPON_RANGE) {
 			lastThreat = 240;
+
+			if (shotCooldown <= 0) {
+				Bolt.shoot(this, getPosition(), LD30.pc.position.cpy().sub(position).angleRad(), 300, 0.05f);
+				shotCooldown = 30;
+			}
 		}
 
 		// check if the engine is still on the mothership

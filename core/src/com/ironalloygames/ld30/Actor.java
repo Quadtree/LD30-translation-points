@@ -45,9 +45,14 @@ public class Actor {
 	}
 
 	public void drawDefault(String graphic) {
+		this.drawDefault(graphic, 90);
+	}
+
+	public void drawDefault(String graphic, int angleOffset) {
 		Sprite s = LD30.a.getSprite(graphic);
 		setColorForDefaultDraw();
-		LD30.batch.draw(s, getPosition().x, getPosition().y, .5f, .5f, 1, 1, s.getWidth() / LD30.METER_SCALE * transPointScale, s.getHeight() / LD30.METER_SCALE * transPointScale, body.getAngle() * (180 / MathUtils.PI) - 90);
+		LD30.batch.draw(s, getPosition().x, getPosition().y, .5f, .5f, 1, 1, s.getWidth() / LD30.METER_SCALE * transPointScale, s.getHeight() / LD30.METER_SCALE * transPointScale, body.getAngle() * (180 / MathUtils.PI)
+				- angleOffset);
 	}
 
 	public void endContact(Actor other, Fixture localFixture) {

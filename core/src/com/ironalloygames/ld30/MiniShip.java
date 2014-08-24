@@ -3,6 +3,7 @@ package com.ironalloygames.ld30;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ironalloygames.ld30.world.World;
 
 public class MiniShip extends Actor {
@@ -34,7 +35,16 @@ public class MiniShip extends Actor {
 		CircleShape cs = new CircleShape();
 		cs.setRadius(37f / LD30.METER_SCALE / 2);
 
-		body.createFixture(cs, 1);
+		FixtureDef fd = new FixtureDef();
+		fd.shape = cs;
+		fd.density = 1;
+		fd.filter.groupIndex = getColGroup();
+
+		body.createFixture(fd);
+	}
+
+	protected short getColGroup() {
+		return 0;
 	}
 
 	protected float getEnginePower() {

@@ -3,8 +3,19 @@ package com.ironalloygames.ld30.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.ironalloygames.ld30.Shark;
 
 public class WaterWorld extends World {
+
+	public WaterWorld() {
+		for (int i = 0; i < 20; i++) {
+			Shark g = new Shark();
+			g.setPosition(new Vector2(MathUtils.random(-RADIUS, RADIUS), MathUtils.random(-RADIUS, RADIUS)));
+			addActor(g);
+		}
+	}
 
 	@Override
 	public Color getColor() {
