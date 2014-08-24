@@ -43,6 +43,8 @@ public class Mothership extends Actor {
 		if (other instanceof Gem && other.hp > 0) {
 			gems++;
 			other.hp = -1000;
+
+			LD30.a.getSound("gem").play();
 		}
 
 		if (other instanceof MothershipEngine && other.hp > 0) {

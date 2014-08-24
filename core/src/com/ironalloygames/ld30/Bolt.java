@@ -17,6 +17,9 @@ public class Bolt extends Actor {
 		b.damage = damage;
 		b.originalWorld = firer.originalWorld;
 		firer.world.addActor(b);
+
+		if (LD30.currentWorld == firer.world)
+			LD30.a.getSound("shoot").play();
 	}
 
 	float damage = 0.25f;
@@ -44,6 +47,11 @@ public class Bolt extends Actor {
 		fd.filter.groupIndex = -7;
 
 		body.createFixture(fd);
+	}
+
+	@Override
+	public float getDragModifier() {
+		return 0.1f;
 	}
 
 	@Override

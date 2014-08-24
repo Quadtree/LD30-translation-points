@@ -26,19 +26,21 @@ public class LD30 extends ApplicationAdapter {
 	public static Assets a;
 	public static SpriteBatch batch;
 	public static OrthographicCamera cam;
+	public static World currentWorld;
 	public static EnemyMiniShip enemyMiniShip = null;
 	public static final float METER_SCALE = 5f;
-	public static Mothership mothership = null;
 
+	public static Mothership mothership = null;
 	public static MothershipEngine mothershipEngine = null;
+
 	public static boolean needToCreateSpaceDust = false;
 
 	public static PlayerMiniShip pc;
-
 	public static int respawnTimer = 0;
-	static ArrayList<Vector2> spaceDust = new ArrayList<Vector2>();
 
+	static ArrayList<Vector2> spaceDust = new ArrayList<Vector2>();
 	public static ShapeRenderer sr;
+
 	public static OrthographicCamera uiCamera;
 
 	public static boolean victoryDialogEverShown = false;
@@ -69,8 +71,6 @@ public class LD30 extends ApplicationAdapter {
 	Music currentlyPlayingMusic = null;
 
 	int currentMusicWorld = -1;
-
-	World currentWorld;
 
 	Texture img;
 
@@ -122,6 +122,11 @@ public class LD30 extends ApplicationAdapter {
 		uiCamera = new OrthographicCamera(1024, 768);
 
 		createSpaceDust();
+
+		a.getSound("gem");
+		a.getSound("miniship_die");
+		a.getSound("shoot");
+		a.getSound("translation-point");
 	};
 
 	@Override
@@ -130,7 +135,8 @@ public class LD30 extends ApplicationAdapter {
 		int currentWorldIndex = worlds.indexOf(currentWorld);
 
 		if (currentWorldIndex != currentMusicWorld && currentlyPlayingMusic != null) {
-			System.out.println("Musical dissonance detected" + currentWorldIndex + " " + currentMusicWorld);
+			// System.out.println("Musical dissonance detected" +
+			// currentWorldIndex + " " + currentMusicWorld);
 			currentlyPlayingMusic.setVolume(currentlyPlayingMusic.getVolume() - 0.01f);
 
 			if (currentlyPlayingMusic.getVolume() < 0.01f) {

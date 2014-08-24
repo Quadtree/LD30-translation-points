@@ -123,6 +123,9 @@ public class Actor {
 			f.originalWorld = this.originalWorld;
 			world.addActor(f);
 		}
+
+		if (LD30.currentWorld == world)
+			LD30.a.getSound("miniship_die").play();
 	}
 
 	public float getAngle() {
@@ -135,6 +138,10 @@ public class Actor {
 
 	protected BodyType getBodyType() {
 		return BodyDef.BodyType.DynamicBody;
+	}
+
+	public float getDragModifier() {
+		return 0;
 	}
 
 	public float getMaxHP() {
@@ -255,7 +262,7 @@ public class Actor {
 			body.setTransform(position.cpy(), getAngle());
 
 		velocity = body.getLinearVelocity().cpy();
-		body.setLinearVelocity(velocity.cpy().scl(world.getDragCoeff()));
+		body.setLinearVelocity(velocity.cpy().scl(MathUtils.clamp(world.getDragCoeff() + this.getDragModifier(), 0, 1)));
 		angle = body.getAngle();
 		angularVelocity = body.getAngularVelocity();
 
