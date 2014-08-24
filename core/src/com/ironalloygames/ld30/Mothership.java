@@ -14,6 +14,8 @@ public class Mothership extends Actor {
 
 	boolean firstSpawnPossible = false;
 
+	public int gems = 0;
+
 	public boolean hasEngine = true;
 
 	int heyDialogTimer = -100000000;
@@ -135,7 +137,7 @@ public class Mothership extends Actor {
 
 		LD30.respawnTimer--;
 
-		if (LD30.pc == null && firstSpawnPossible) {
+		if (LD30.pc == null && (firstSpawnPossible || true)) {
 
 			if (LD30.respawnTimer <= 0) {
 				PlayerMiniShip pc = new PlayerMiniShip();

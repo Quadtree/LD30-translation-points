@@ -33,7 +33,7 @@ public class LD30 extends ApplicationAdapter {
 
 	public static PlayerMiniShip pc;
 
-	public static int respawnTimer = 360;
+	public static int respawnTimer = 0;
 	static ArrayList<Vector2> spaceDust = new ArrayList<Vector2>();
 
 	public static ShapeRenderer sr;

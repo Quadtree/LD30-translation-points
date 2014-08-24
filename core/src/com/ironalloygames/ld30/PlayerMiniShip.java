@@ -19,9 +19,10 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 
 	Vector2 currentMousePos = new Vector2();
 	Vector2 currentMouseScreenPos = new Vector2();
-	boolean strafeLeft = false;
 
+	boolean strafeLeft = false;
 	boolean strafeRight = false;
+
 	boolean thrusting = false;
 
 	OrthographicCamera uiCamera = new OrthographicCamera(1024, 768);
@@ -96,7 +97,7 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 	}
 
 	private void renderRadar(Actor other, String text) {
-		if (other.world == world) {
+		if (other != null && other.world == world) {
 			Vector2 delta = other.position.cpy().sub(position);
 			float angle = delta.angleRad();
 
@@ -129,6 +130,11 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 
 		renderRadar(LD30.mothership, "Mothership");
 		renderRadar(LD30.mothershipEngine, "Mothership Engine");
+
+		for (int i = 0; i < LD30.mothership.gems; i++) {
+			LD30.batch.setColor(Color.CYAN);
+			LD30.batch.draw(LD30.a.getSprite("gem"), 25 - 1024 / 2 + 40 * i, 768 / 2 - 100);
+		}
 
 		LD30.batch.end();
 	}
