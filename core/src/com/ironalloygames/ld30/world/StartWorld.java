@@ -27,9 +27,14 @@ public class StartWorld extends World {
 		for (int i = 0; i < 10; i++) {
 			Gem g = new Gem();
 			g.setPosition(new Vector2(MathUtils.random(-RADIUS, RADIUS), MathUtils.random(-RADIUS, RADIUS)));
+
+			while (g.getPosition().len2() < 200 * 200) {
+				g.setPosition(new Vector2(MathUtils.random(-RADIUS, RADIUS), MathUtils.random(-RADIUS, RADIUS)));
+			}
+
 			addActor(g);
 
-			int c = MathUtils.random(2, 5);
+			int c = MathUtils.random(2, 7);
 
 			for (int j = 0; j < c; j++) {
 				Asteroid ast = new Asteroid();

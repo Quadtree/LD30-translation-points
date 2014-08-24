@@ -18,7 +18,7 @@ public class Mothership extends Actor {
 
 	boolean firstSpawnPossible = false;
 
-	public int gems = 6;
+	public int gems = 0;
 
 	public boolean hasEngine = true;
 

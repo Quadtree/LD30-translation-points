@@ -180,17 +180,17 @@ public class LD30 extends ApplicationAdapter {
 		sr.end();
 		batch.end();
 
-		batch.begin();
-
-		// if (victoryDialogShown) {
-		batch.setColor(Color.WHITE);
-		batch.draw(a.getTexture("victory_dialog"), -512 / 2, -384 / 2);
-		// }
-
-		batch.end();
-
 		if (pc != null)
 			pc.renderUI();
+
+		batch.begin();
+
+		if (victoryDialogShown) {
+			batch.setColor(Color.WHITE);
+			batch.draw(a.getTexture("victory_dialog"), -512 / 2, -384 / 2);
+		}
+
+		batch.end();
 
 		if (!victoryDialogEverShown) {
 			if (LD30.mothership.hasEngine && !LD30.enemyMiniShip.keep()) {
