@@ -23,7 +23,7 @@ public abstract class World implements ContactListener {
 
 	ArrayList<Actor> actorAddQueue = new ArrayList<Actor>();
 
-	ArrayList<Actor> actors = new ArrayList<Actor>();
+	public ArrayList<Actor> actors = new ArrayList<Actor>();
 
 	public long milisDone;
 
