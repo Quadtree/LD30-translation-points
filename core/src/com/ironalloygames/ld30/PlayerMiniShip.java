@@ -6,7 +6,9 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.ironalloygames.ld30.world.World;
@@ -93,6 +95,21 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 		return false;
 	}
 
+	private void renderRadar(Actor other, String text) {
+		if (other.world == world) {
+			Vector2 delta = other.position.cpy().sub(position);
+			float angle = delta.angleRad();
+
+			if (delta.len2() > 110 * 110) {
+
+				String txt = text + " " + (int) delta.len() + "m";
+
+				TextBounds tb = LD30.a.getFont(16).getBounds(txt);
+				LD30.a.getFont(16).draw(LD30.batch, txt, MathUtils.cos(angle) * 200 - tb.width / 2, MathUtils.sin(angle) * 200 - tb.height / 2);
+			}
+		}
+	}
+
 	public void renderUI() {
 		LD30.sr.setProjectionMatrix(uiCamera.combined);
 		LD30.sr.begin(ShapeType.Filled);
@@ -106,6 +123,14 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 		LD30.sr.rect(25 - 1024 / 2 + hpBarWidth, 768 / 2 - 50, shieldBarWidth, 25);
 
 		LD30.sr.end();
+
+		LD30.batch.setProjectionMatrix(uiCamera.combined);
+		LD30.batch.begin();
+
+		renderRadar(LD30.mothership, "Mothership");
+		renderRadar(LD30.mothershipEngine, "Mothership Engine");
+
+		LD30.batch.end();
 	}
 
 	@Override
