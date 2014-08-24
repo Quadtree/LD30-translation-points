@@ -2,6 +2,7 @@ package com.ironalloygames.ld30;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.ironalloygames.ld30.world.FireWorld;
 import com.ironalloygames.ld30.world.NegativeWorld;
 import com.ironalloygames.ld30.world.StartWorld;
 import com.ironalloygames.ld30.world.World;
@@ -141,7 +142,7 @@ public class EnemyMiniShip extends MiniShip {
 			return;
 		}
 
-		if (world instanceof StartWorld || world instanceof NegativeWorld)
+		if (world instanceof StartWorld || world instanceof NegativeWorld || world instanceof FireWorld)
 			lastThreat = 30;
 
 		timeWithoutEngine++;

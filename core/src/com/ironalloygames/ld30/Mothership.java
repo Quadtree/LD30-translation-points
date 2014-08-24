@@ -28,6 +28,8 @@ public class Mothership extends Actor {
 
 	int startTime = 0;
 
+	int talkCooldown = 3000;
+
 	ArrayList<Vector2> towBeamTargets = new ArrayList<Vector2>();
 
 	public Mothership() {
@@ -151,20 +153,20 @@ public class Mothership extends Actor {
 			this.addDialogue("Engine? Damnit!", new Vector2(35, 0), 120);
 
 		if (heyDialogTimer == 800) {
-			this.addDialogue("Exploration ship, please see if you can retrieve our engine.", new Vector2(50, 0), 1200);
+			this.addDialogue("Exploration ship, please see if you can retrieve our engine.", new Vector2(50, 0), 600);
 			firstSpawnPossible = true;
 		}
 
 		if (heyDialogTimer == 820)
-			this.addDialogue("And gems!!! ... If you want upgrades", new Vector2(45, 0), 1200);
+			this.addDialogue("And gems!!! ... If you want upgrades", new Vector2(45, 0), 600);
 
 		if (heyDialogTimer == 900) {
-			this.addDialogue("Create translation points to bring the engine back to this sector", new Vector2(40, 0), 1200);
+			this.addDialogue("Create translation points to bring the engine back to this sector", new Vector2(40, 0), 600);
 			firstSpawnPossible = true;
 		}
 
 		if (heyDialogTimer == 960) {
-			this.addDialogue("Then we'll pull it in. Also make sure that guy is gone, or he'll just steal it again!", new Vector2(35, 0), 1200);
+			this.addDialogue("Then we'll pull it in. Also make sure that guy is gone, or he'll just steal it again!", new Vector2(35, 0), 600);
 			firstSpawnPossible = true;
 		}
 
@@ -175,6 +177,7 @@ public class Mothership extends Actor {
 		}
 
 		startTime++;
+		talkCooldown--;
 
 		LD30.respawnTimer--;
 
@@ -188,7 +191,14 @@ public class Mothership extends Actor {
 			}
 		}
 
-		if (LD30.pc != null && LD30.pc.world == world && LD30.pc.position.dst2(position) < 200 * 200 && LD30.pc.hp < LD30.pc.getMaxHP()) {
+		if (LD30.pc != null && LD30.pc.world == world && LD30.pc.position.dst2(position) < 110 * 110 && talkCooldown <= 0) {
+			talkCooldown = 1200;
+
+			this.addDialogue("Create some translation points to bring our engine back to this sector", new Vector2(40, 0), 600);
+			this.addDialogue("We'll take it from there, but make sure that guy is gone so he can't steal it again!", new Vector2(35, 0), 600);
+		}
+
+		if (LD30.pc != null && LD30.pc.world == world && LD30.pc.position.dst2(position) < 150 * 150 && LD30.pc.hp < LD30.pc.getMaxHP()) {
 			LD30.pc.hp = Math.min(LD30.pc.hp + 0.002f, LD30.pc.getMaxHP());
 
 		}
@@ -217,7 +227,7 @@ public class Mothership extends Actor {
 					if (isRayClear) {
 						Vector2 impulse = position.cpy().sub(a.position);
 						impulse.nor();
-						impulse.scl(1500);
+						impulse.scl(1500 / 4);
 						a.body.applyLinearImpulse(impulse, a.body.getWorldCenter(), true);
 
 						towBeamTargets.add(a.position.cpy());

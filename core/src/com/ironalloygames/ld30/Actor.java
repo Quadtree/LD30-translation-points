@@ -128,6 +128,10 @@ public class Actor {
 			LD30.a.getSound("miniship_die").play();
 	}
 
+	protected void fixedPosition() {
+
+	}
+
 	public float getAngle() {
 		if (body != null) {
 			return body.getAngle();
@@ -266,8 +270,10 @@ public class Actor {
 
 		position = body.getPosition().cpy();
 
-		if (world.fixPosition(position))
+		if (world.fixPosition(position)) {
 			body.setTransform(position.cpy(), getAngle());
+			fixedPosition();
+		}
 
 		velocity = body.getLinearVelocity().cpy();
 		body.setLinearVelocity(velocity.cpy().scl(MathUtils.clamp(world.getDragCoeff() + this.getDragModifier(), 0, 1)));

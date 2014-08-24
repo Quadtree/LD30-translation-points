@@ -13,7 +13,7 @@ public class Gem extends Actor {
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(33 / 2 / LD30.METER_SCALE, 33 / 2 / LD30.METER_SCALE);
 
-		body.createFixture(ps, 4);
+		body.createFixture(ps, 1);
 	}
 
 	@Override

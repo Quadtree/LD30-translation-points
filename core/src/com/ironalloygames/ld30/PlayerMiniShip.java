@@ -53,6 +53,13 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 	}
 
 	@Override
+	protected void fixedPosition() {
+		super.fixedPosition();
+
+		LD30.needToCreateSpaceDust = true;
+	}
+
+	@Override
 	public boolean keyDown(int keycode) {
 
 		if (LD30.anyKeyPressed())
@@ -174,7 +181,7 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 			LD30.a.getFont(16).drawMultiLine(
 					LD30.batch,
 					"Upgrades (all cost " + GEM_COST + " gems):\n\n" + (!hasShieldUpgrade ? "Press 1 to buy Shields\n" : "Shield upgrade already purchased\n")
-							+ (!hasArmorUpgrade ? "Press 2 to buy +200% armor\n" : "Armor upgrade already purchased\n") + (!hasAgilityUpgrade ? "Press 3 to buy +50% agility\n" : "Agility upgrade already purchased\n"),
+					+ (!hasArmorUpgrade ? "Press 2 to buy +200% armor\n" : "Armor upgrade already purchased\n") + (!hasAgilityUpgrade ? "Press 3 to buy +50% agility\n" : "Agility upgrade already purchased\n"),
 					25 - 1024 / 2, 768 / 2 - 300);
 		}
 
