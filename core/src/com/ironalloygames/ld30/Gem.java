@@ -25,11 +25,6 @@ public class Gem extends Actor {
 	public void render() {
 		super.render();
 
-		drawDefault("gem");
-	}
-
-	@Override
-	protected void setColorForDefaultDraw() {
-		LD30.batch.setColor(Color.CYAN);
+		drawDefault("gem", 90, Color.CYAN);
 	}
 }

@@ -16,7 +16,14 @@ public class Star extends Actor {
 
 	Fixture burnSensor;
 
+	boolean hasGem = false;
+
 	HashSet<Actor> inBurnRange = new HashSet<Actor>();
+
+	public Star() {
+		hasGem = MathUtils.randomBoolean(0.15f);
+		hp = 0.25f;
+	}
 
 	@Override
 	public void beginContact(Actor other, Fixture localFixture) {
@@ -25,6 +32,17 @@ public class Star extends Actor {
 		if (localFixture == burnSensor && !(other instanceof Star) && !other.isInvulnerable()) {
 
 			inBurnRange.add(other);
+		}
+	}
+
+	@Override
+	public void destroyed() {
+		super.destroyed();
+
+		if (hasGem) {
+			Gem g = new Gem();
+			g.setPosition(position);
+			world.addActor(g);
 		}
 	}
 
@@ -72,6 +90,9 @@ public class Star extends Actor {
 			// (BURN_RANGE / 3));
 			LD30.batch.draw(LD30.a.getSprite("tp_ray"), getPosition().x, getPosition().y, .5f, .5f, 1, 1, BURN_RANGE * 2, 128f / LD30.METER_SCALE, ang * MathUtils.radiansToDegrees);
 		}
+
+		if (hasGem)
+			drawDefault("gem", 90, Color.CYAN);
 	}
 
 	@Override

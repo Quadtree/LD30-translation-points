@@ -1,5 +1,7 @@
 package com.ironalloygames.ld30;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -7,11 +9,30 @@ import com.ironalloygames.ld30.world.WaterWorld;
 import com.ironalloygames.ld30.world.World;
 
 public class Shark extends Actor {
+
+	boolean hasGem = false;
+
+	public Shark() {
+		hasGem = MathUtils.randomBoolean(0.25f);
+		hp = 0.4f;
+	}
+
 	@Override
 	public void beginContact(Actor other, Fixture localFixture) {
 		super.beginContact(other, localFixture);
 
 		other.takeDamage(0.3f);
+	}
+
+	@Override
+	public void destroyed() {
+		super.destroyed();
+
+		if (hasGem) {
+			Gem g = new Gem();
+			g.setPosition(position);
+			world.addActor(g);
+		}
 	}
 
 	@Override
@@ -34,6 +55,9 @@ public class Shark extends Actor {
 		super.render();
 
 		drawDefault("shark");
+
+		if (hasGem)
+			drawDefault("gem", 90, Color.CYAN);
 	}
 
 	@Override

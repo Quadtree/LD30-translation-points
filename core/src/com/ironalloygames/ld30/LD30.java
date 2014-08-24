@@ -127,7 +127,7 @@ public class LD30 extends ApplicationAdapter {
 
 		Sprite spaceDustSprite = a.getSprite("space_dust");
 		Color c = currentWorld.getColor();
-		c.a = 0.25f;
+		c.a = 0.5f;
 		batch.setColor(c);
 		Vector2 pcVel = new Vector2(0, 0);
 

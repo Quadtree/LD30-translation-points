@@ -1,5 +1,6 @@
 package com.ironalloygames.ld30;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -37,6 +38,12 @@ public class Actor {
 		velocity = new Vector2(0, 0);
 	}
 
+	public void addWind(Vector2 wind) {
+		if (body != null) {
+			body.applyLinearImpulse(wind, body.getWorldCenter(), true);
+		}
+	}
+
 	public void beginContact(Actor other, Fixture localFixture) {
 
 	}
@@ -45,12 +52,12 @@ public class Actor {
 	}
 
 	public void drawDefault(String graphic) {
-		this.drawDefault(graphic, 90);
+		this.drawDefault(graphic, 90, originalWorld.getColor());
 	}
 
-	public void drawDefault(String graphic, int angleOffset) {
+	public void drawDefault(String graphic, int angleOffset, Color color) {
 		Sprite s = LD30.a.getSprite(graphic);
-		setColorForDefaultDraw();
+		LD30.batch.setColor(color);
 		LD30.batch.draw(s, getPosition().x, getPosition().y, .5f, .5f, 1, 1, s.getWidth() / LD30.METER_SCALE * transPointScale, s.getHeight() / LD30.METER_SCALE * transPointScale, body.getAngle() * (180 / MathUtils.PI)
 				- angleOffset);
 	}
@@ -153,10 +160,6 @@ public class Actor {
 		}
 
 		oldCollidable = collidable;
-	}
-
-	protected void setColorForDefaultDraw() {
-		LD30.batch.setColor(originalWorld.getColor());
 	}
 
 	public void setPosition(Vector2 pos) {

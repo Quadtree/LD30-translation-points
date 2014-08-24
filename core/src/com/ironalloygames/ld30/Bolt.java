@@ -55,7 +55,7 @@ public class Bolt extends Actor {
 	public void render() {
 		super.render();
 
-		drawDefault("bolt", 0);
+		drawDefault("bolt", 0, originalWorld.getColor());
 	}
 
 	@Override
