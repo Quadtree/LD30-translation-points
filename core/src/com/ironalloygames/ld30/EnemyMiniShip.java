@@ -155,7 +155,7 @@ public class EnemyMiniShip extends MiniShip {
 			lastThreat = 240;
 
 			if (shotCooldown <= 0) {
-				Bolt.shoot(this, getPosition(), LD30.pc.position.cpy().sub(position).angleRad(), 300, 0.05f);
+				Bolt.shoot(this, getPosition(), LD30.pc.position.cpy().sub(position).angleRad(), 400, 0.05f);
 				shotCooldown = 30;
 			}
 		}

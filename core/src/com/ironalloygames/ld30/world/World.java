@@ -61,7 +61,7 @@ public abstract class World implements ContactListener {
 		localEnd.lifespan = lifespan;
 		remoteEnd.lifespan = lifespan;
 
-		if (LD30.currentWorld == this)
+		if (LD30.currentWorld == this || LD30.currentWorld == destination)
 			LD30.a.getSound("translation-point").play();
 	}
 

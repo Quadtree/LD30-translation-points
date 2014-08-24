@@ -16,6 +16,7 @@ public class Bolt extends Actor {
 		b.velocity.set(MathUtils.cos(angle) * speed, MathUtils.sin(angle) * speed);
 		b.damage = damage;
 		b.originalWorld = firer.originalWorld;
+		b.world = firer.world;
 		firer.world.addActor(b);
 
 		if (LD30.currentWorld == firer.world)
@@ -30,8 +31,10 @@ public class Bolt extends Actor {
 	public void beginContact(Actor other, Fixture localFixture) {
 		super.beginContact(other, localFixture);
 
-		other.takeDamage(damage);
-		this.hp = -1;
+		if (!other.isInvulnerable()) {
+			other.takeDamage(damage);
+			this.hp = -1;
+		}
 	}
 
 	@Override
