@@ -1,5 +1,6 @@
 package com.ironalloygames.ld30;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -74,6 +75,12 @@ public class Mothership extends Actor {
 		super.render();
 
 		this.drawDefault("mothership" + (hasEngine ? "3" : "1"));
+
+		if (LD30.pc != null && LD30.pc.world == world && LD30.pc.position.dst2(position) < 200 * 200 && LD30.pc.hp < LD30.pc.getMaxHP()) {
+			Vector2 d = LD30.pc.position.cpy().sub(position);
+			LD30.batch.setColor(Color.GREEN);
+			LD30.batch.draw(LD30.a.getSprite("ray"), getPosition().x, getPosition().y, 0, .5f, 1, 1, d.len(), 64f / LD30.METER_SCALE, d.angle());
+		}
 	}
 
 	@Override
@@ -102,7 +109,7 @@ public class Mothership extends Actor {
 			this.addDialogue("Tow beam, nothing missing", new Vector2(40, -50), 200);
 
 		if (heyDialogTimer == 410)
-			this.addDialogue("Ore processing, nothing missing", new Vector2(30, 50), 200);
+			this.addDialogue("Gem processing, nothing missing", new Vector2(30, 50), 200);
 
 		if (heyDialogTimer == 550)
 			this.addDialogue("Engine?", new Vector2(40, 0), 120);
@@ -136,6 +143,11 @@ public class Mothership extends Actor {
 				pc.setPosition(new Vector2(0, 90));
 				world.addActor(pc);
 			}
+		}
+
+		if (LD30.pc != null && LD30.pc.world == world && LD30.pc.position.dst2(position) < 200 * 200 && LD30.pc.hp < LD30.pc.getMaxHP()) {
+			LD30.pc.hp = Math.min(LD30.pc.hp + 0.005f, LD30.pc.getMaxHP());
+
 		}
 	}
 

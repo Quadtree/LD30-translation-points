@@ -137,6 +137,10 @@ public class Actor {
 		return BodyDef.BodyType.DynamicBody;
 	}
 
+	public float getMaxHP() {
+		return Float.MAX_VALUE;
+	}
+
 	public Vector2 getPosition() {
 		if (position != null)
 			return position.cpy();

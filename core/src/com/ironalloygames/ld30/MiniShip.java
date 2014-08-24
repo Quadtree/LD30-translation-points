@@ -52,6 +52,11 @@ public class MiniShip extends Actor {
 	}
 
 	@Override
+	public float getMaxHP() {
+		return 1;
+	}
+
+	@Override
 	public void render() {
 		super.render();
 		drawDefault("mini_ship");
