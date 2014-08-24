@@ -73,6 +73,10 @@ public class TranslationPoint extends Actor {
 		body.createFixture(fd);
 	}
 
+	public float getScale() {
+		return 1;
+	}
+
 	@Override
 	public boolean isInvulnerable() {
 		return true;
@@ -92,7 +96,11 @@ public class TranslationPoint extends Actor {
 	@Override
 	public void render() {
 		super.render();
-		Color c = destination.getColor();
+		Color c;
+		if (destination != null)
+			c = destination.getColor();
+		else
+			c = Color.YELLOW;
 
 		if (lifespan < 60) {
 			c.a = lifespan / 60f;
@@ -102,10 +110,10 @@ public class TranslationPoint extends Actor {
 			c.a = spawnStatus / 60f;
 		}
 
-		Sprite raySprite = LD30.a.getSprite("tp_ray");
+		Sprite raySprite = LD30.a.getSprite("ray");
 		LD30.batch.setColor(c);
 		for (int i = 0; i < 8; i++) {
-			LD30.batch.draw(raySprite, getPosition().x, getPosition().y, .5f, .5f, 1, 1, 128f / LD30.METER_SCALE * MathUtils.random(), 128f / LD30.METER_SCALE * MathUtils.random(), MathUtils.random(0, 360));
+			LD30.batch.draw(raySprite, getPosition().x, getPosition().y, 0, .5f, 1, 1, 64f / LD30.METER_SCALE * MathUtils.random() * getScale(), 64f / LD30.METER_SCALE * MathUtils.random() * getScale(), MathUtils.random(0, 360));
 		}
 	}
 

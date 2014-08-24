@@ -7,6 +7,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.ironalloygames.ld30.world.World;
 
 public class Mothership extends Actor {
+
+	int startTime = 0;
+
 	public Mothership() {
 		angle = MathUtils.PI / 2;
 	}
@@ -16,14 +19,14 @@ public class Mothership extends Actor {
 		super.enteringWorld(world);
 
 		PolygonShape ps = new PolygonShape();
-		ps.setAsBox(350 / 2 / LD30.METER_SCALE, 314 / 2 / LD30.METER_SCALE, new Vector2(35 / LD30.METER_SCALE, 0), 0);
+		ps.setAsBox(425 / 2 / LD30.METER_SCALE, 314 / 2 / LD30.METER_SCALE, new Vector2(0, 0), 0);
 
 		body.createFixture(ps, 0);
 	}
 
 	@Override
 	protected BodyType getBodyType() {
-		return BodyType.StaticBody;
+		return BodyType.KinematicBody;
 	}
 
 	@Override
@@ -40,7 +43,20 @@ public class Mothership extends Actor {
 	public void render() {
 		super.render();
 
-		this.drawDefault("mothership1");
+		this.drawDefault("mothership3");
+	}
+
+	@Override
+	public void update() {
+		super.update();
+
+		if (startTime < 140) {
+			body.setLinearVelocity(0, 15);
+		} else {
+			body.setLinearVelocity(0, 0);
+		}
+
+		startTime++;
 	}
 
 }

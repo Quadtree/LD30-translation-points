@@ -2,12 +2,24 @@ package com.ironalloygames.ld30.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector2;
+import com.ironalloygames.ld30.CapitalTranslationPoint;
 import com.ironalloygames.ld30.Mothership;
 
 public class StartWorld extends World {
 
 	public StartWorld() {
-		addActor(new Mothership());
+		Mothership ms = new Mothership();
+
+		CapitalTranslationPoint pt = new CapitalTranslationPoint();
+		pt.setPosition(new Vector2(0, 0));
+		pt.lifespan = 180;
+
+		ms.immuneTranslationPoint = pt;
+		ms.lastTranslationPoint = pt;
+
+		addActor(pt);
+		addActor(ms);
 	}
 
 	@Override
