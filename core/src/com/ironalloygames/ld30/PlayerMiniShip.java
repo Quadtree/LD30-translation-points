@@ -168,7 +168,7 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 			LD30.a.getFont(16).drawMultiLine(
 					LD30.batch,
 					"Upgrades (all cost " + GEM_COST + " gems):\n\n" + (!hasShieldUpgrade ? "Press 1 to buy Shields\n" : "Shield upgrade already purchased\n")
-					+ (!hasArmorUpgrade ? "Press 2 to buy +200% armor\n" : "Armor upgrade already purchased\n") + (!hasAgilityUpgrade ? "Press 3 to buy +50% agility\n" : "Agility upgrade already purchased\n"),
+							+ (!hasArmorUpgrade ? "Press 2 to buy +200% armor\n" : "Armor upgrade already purchased\n") + (!hasAgilityUpgrade ? "Press 3 to buy +50% agility\n" : "Agility upgrade already purchased\n"),
 					25 - 1024 / 2, 768 / 2 - 300);
 		}
 
@@ -194,11 +194,13 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 		setMousePos(screenX, screenY);
 
 		if (button == Buttons.LEFT && world.worldAbove != null) {
-			world.addTranslationPoint(currentMousePos, world.worldAbove, 600);
+			if (!world.addTranslationPoint(currentMousePos, world.worldAbove, 600))
+				LD30.a.getSound("cant").play();
 		}
 
 		if (button == Buttons.RIGHT && world.worldBelow != null) {
-			world.addTranslationPoint(currentMousePos, world.worldBelow, 600);
+			if (!world.addTranslationPoint(currentMousePos, world.worldBelow, 600))
+				LD30.a.getSound("cant").play();
 		}
 
 		return false;

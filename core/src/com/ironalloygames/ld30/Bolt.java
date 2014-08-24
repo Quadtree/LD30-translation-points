@@ -34,6 +34,9 @@ public class Bolt extends Actor {
 		if (!other.isInvulnerable()) {
 			other.takeDamage(damage);
 			this.hp = -1;
+
+			if (LD30.currentWorld == world)
+				LD30.a.getSound("hit").play();
 		}
 	}
 

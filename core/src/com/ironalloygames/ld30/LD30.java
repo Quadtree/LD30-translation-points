@@ -127,6 +127,8 @@ public class LD30 extends ApplicationAdapter {
 		a.getSound("miniship_die");
 		a.getSound("shoot");
 		a.getSound("translation-point");
+		a.getSound("cant");
+		a.getSound("hit");
 	};
 
 	@Override

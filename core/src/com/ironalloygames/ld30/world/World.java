@@ -7,7 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.ironalloygames.ld30.Actor;
 import com.ironalloygames.ld30.LD30;
 import com.ironalloygames.ld30.TranslationPoint;
@@ -19,11 +21,14 @@ public abstract class World implements ContactListener {
 		Vector2 p;
 	}
 
+	public static float MIN_TRANS_POINT_SEP = 14;
 	public static float RADIUS = 250;
 
 	ArrayList<Actor> actorAddQueue = new ArrayList<Actor>();
 
 	public ArrayList<Actor> actors = new ArrayList<Actor>();
+
+	boolean foundAnything = false;
 
 	public long milisDone;
 
@@ -32,8 +37,8 @@ public abstract class World implements ContactListener {
 	public final Vector2 pivot = new Vector2(0, 0);
 
 	ArrayList<Transfer> transferQueue = new ArrayList<World.Transfer>();
-
 	public World worldAbove;
+
 	public World worldBelow;
 
 	public World() {
@@ -46,14 +51,54 @@ public abstract class World implements ContactListener {
 		actorAddQueue.add(a);
 	}
 
-	public void addTranslationPoint(Vector2 pos, World destination, int lifespan) {
+	public boolean addTranslationPoint(final Vector2 pos, World destination, int lifespan) {
+
+		foundAnything = false;
+
+		physicsWorld.QueryAABB(new QueryCallback() {
+
+			@Override
+			public boolean reportFixture(Fixture fixture) {
+
+				if (fixture.getBody().getUserData() instanceof TranslationPoint && fixture.getBody().getPosition().dst2(pos) < MIN_TRANS_POINT_SEP * MIN_TRANS_POINT_SEP) {
+					foundAnything = true;
+					return false;
+				}
+
+				return true;
+			}
+		}, pos.x, pos.y, pos.x, pos.y);
+
+		if (foundAnything)
+			return false;
+
+		Vector2 destPos = pos.cpy();
+		destination.fixPosition(destPos);
+
+		destination.physicsWorld.QueryAABB(new QueryCallback() {
+
+			@Override
+			public boolean reportFixture(Fixture fixture) {
+
+				if (fixture.getBody().getUserData() instanceof TranslationPoint && fixture.getBody().getPosition().dst2(pos) < MIN_TRANS_POINT_SEP * MIN_TRANS_POINT_SEP) {
+					foundAnything = true;
+					return false;
+				}
+
+				return true;
+			}
+		}, destPos.x, destPos.y, destPos.x, destPos.y);
+
+		if (foundAnything)
+			return false;
+
 		TranslationPoint localEnd = new TranslationPoint(destination);
 		TranslationPoint remoteEnd = new TranslationPoint(this);
 		localEnd.otherEnd = remoteEnd;
 		remoteEnd.otherEnd = localEnd;
 
 		localEnd.setPosition(pos);
-		remoteEnd.setPosition(pos.cpy().scl(1f / getScale()).scl(destination.getScale()));
+		remoteEnd.setPosition(pos.cpy());
 
 		addActor(localEnd);
 		destination.addActor(remoteEnd);
@@ -63,6 +108,8 @@ public abstract class World implements ContactListener {
 
 		if (LD30.currentWorld == this || LD30.currentWorld == destination)
 			LD30.a.getSound("translation-point").play();
+
+		return true;
 	}
 
 	@Override
