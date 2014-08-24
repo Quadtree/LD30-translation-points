@@ -15,12 +15,16 @@ import com.ironalloygames.ld30.world.World;
 
 public class PlayerMiniShip extends MiniShip implements InputProcessor {
 
-	boolean braking = false;
+	public static final int GEM_COST = 4;
 
+	boolean braking = false;
 	Vector2 currentMousePos = new Vector2();
+
 	Vector2 currentMouseScreenPos = new Vector2();
+	boolean inPurchaseRange = false;
 
 	boolean strafeLeft = false;
+
 	boolean strafeRight = false;
 
 	boolean thrusting = false;
@@ -62,6 +66,21 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 
 		if (keycode == Keys.RIGHT || keycode == Keys.D)
 			strafeRight = true;
+
+		if (inPurchaseRange && LD30.mothership != null && LD30.mothership.gems >= GEM_COST) {
+			if (keycode == Keys.NUM_1) {
+				hasShieldUpgrade = true;
+				LD30.mothership.gems -= GEM_COST;
+			}
+			if (keycode == Keys.NUM_2) {
+				hasArmorUpgrade = true;
+				LD30.mothership.gems -= GEM_COST;
+			}
+			if (keycode == Keys.NUM_3) {
+				hasAgilityUpgrade = true;
+				LD30.mothership.gems -= GEM_COST;
+			}
+		}
 
 		return false;
 	}
@@ -136,6 +155,15 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 			LD30.batch.draw(LD30.a.getSprite("gem"), 25 - 1024 / 2 + 40 * i, 768 / 2 - 100);
 		}
 
+		if (inPurchaseRange) {
+			LD30.a.getFont(16).setColor(Color.WHITE);
+			LD30.a.getFont(16).drawMultiLine(
+					LD30.batch,
+					"Upgrades (all cost " + GEM_COST + " gems):\n\n" + (!hasShieldUpgrade ? "Press 1 to buy Shields\n" : "Shield upgrade already purchased\n")
+							+ (!hasArmorUpgrade ? "Press 2 to buy +200% armor\n" : "Armor upgrade already purchased\n") + (!hasAgilityUpgrade ? "Press 3 to buy +50% agility\n" : "Agility upgrade already purchased\n"),
+					25 - 1024 / 2, 768 / 2 - 300);
+		}
+
 		LD30.batch.end();
 	}
 
@@ -183,6 +211,8 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 	@Override
 	public void update() {
 		super.update();
+
+		inPurchaseRange = LD30.mothership.world == world && LD30.mothership.position.dst2(position) < 200 * 200;
 
 		if (thrusting && !braking) {
 			thrust = 1;

@@ -179,7 +179,7 @@ public class Actor {
 			// LD30.sr.rect(v3.x * 1024 / 2 - bd.width / 2, v3.y * 768 / 2 -
 			// bd.height / 2, bd.width, bd.height);
 
-			LD30.a.getFont(16).setColor(Color.YELLOW);
+			LD30.a.getFont(16).setColor(1, 1, 0, 1);
 			LD30.a.getFont(16).draw(LD30.batch, d.text, v3.x * 1024 / 2 - bd.width / 2, v3.y * 768 / 2 - bd.height / 2);
 		}
 	}

@@ -10,12 +10,18 @@ public class MiniShip extends Actor {
 
 	protected Vector2 dest;
 
+	public boolean hasAgilityUpgrade = false;
+	public boolean hasArmorUpgrade = false;
+
+	public boolean hasShieldUpgrade = false;
+
 	float maxShield = 0;
 	float shield = 0;
 
 	protected int strafe = 0;
 
 	protected int thrust = 0;
+
 	protected int turn = 0;
 
 	public MiniShip() {
@@ -48,12 +54,16 @@ public class MiniShip extends Actor {
 	}
 
 	protected float getEnginePower() {
-		return 90;
+		return 90 * (hasAgilityUpgrade ? 1.5f : 1.0f);
 	}
 
 	@Override
 	public float getMaxHP() {
-		return 1;
+		return 1 * (hasArmorUpgrade ? 3 : 1);
+	}
+
+	public float getMaxShield() {
+		return hasShieldUpgrade ? 0.5f : 0;
 	}
 
 	@Override
@@ -99,6 +109,10 @@ public class MiniShip extends Actor {
 				turn = 1;
 			if (rightPointDist < centerPointDist && rightPointDist < leftPointDist)
 				turn = -1;
+		}
+
+		if (shield < getMaxShield()) {
+			shield = Math.min(shield + 0.001f, getMaxShield());
 		}
 
 		if (body != null) {
