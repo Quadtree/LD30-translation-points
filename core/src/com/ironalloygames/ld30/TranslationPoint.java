@@ -123,7 +123,7 @@ public class TranslationPoint extends Actor {
 
 		if (spawnStatus >= 60) {
 			for (Actor a : inGravityWell) {
-				if (a.body != null && a.immuneTranslationPoint != this) {
+				if (a.body != null && a.immuneTranslationPoint != this && this.otherEnd != null) {
 					Vector2 delta = getPosition().sub(a.body.getPosition());
 					float dist2 = delta.len2();
 					float force = ((GRAVITY_RANGE * GRAVITY_RANGE) - delta.len2()) / (GRAVITY_RANGE * GRAVITY_RANGE);
