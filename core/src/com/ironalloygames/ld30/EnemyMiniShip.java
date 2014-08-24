@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ld30.world.FireWorld;
 import com.ironalloygames.ld30.world.NegativeWorld;
 import com.ironalloygames.ld30.world.StartWorld;
+import com.ironalloygames.ld30.world.WaterWorld;
 import com.ironalloygames.ld30.world.World;
 
 public class EnemyMiniShip extends MiniShip {
@@ -70,7 +71,7 @@ public class EnemyMiniShip extends MiniShip {
 
 		do {
 			dest = LD30.worlds.get(MathUtils.random(LD30.worlds.size() - 1));
-		} while (dest instanceof FireWorld || dest instanceof NegativeWorld || dest instanceof StartWorld);
+		} while (dest instanceof FireWorld || dest instanceof NegativeWorld || dest instanceof StartWorld || dest instanceof WaterWorld || dest == world);
 
 		createPointAtLoc(dest);
 
@@ -149,7 +150,7 @@ public class EnemyMiniShip extends MiniShip {
 			return;
 		}
 
-		if (world instanceof StartWorld || world instanceof NegativeWorld || world instanceof FireWorld)
+		if (world instanceof StartWorld || world instanceof NegativeWorld || world instanceof FireWorld || world instanceof WaterWorld)
 			lastThreat = 30;
 
 		timeWithoutEngine++;
