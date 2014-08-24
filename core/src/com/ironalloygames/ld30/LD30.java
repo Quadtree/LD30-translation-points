@@ -54,7 +54,6 @@ public class LD30 extends ApplicationAdapter {
 
 		currentWorld = worlds.get(0);
 		currentWorld.addActor(pc);
-		currentWorld.addActor(new MiniShip());
 
 		for (int i = 0; i < worlds.size(); i++) {
 			if (i < worlds.size() - 1) {

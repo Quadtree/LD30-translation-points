@@ -1,14 +1,35 @@
 
 pack.png
-size: 169,175
+size: 497,481
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+fragment
+  rotate: false
+  xy: 458, 368
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
 mini_ship
   rotate: false
-  xy: 132, 138
+  xy: 328, 225
   size: 37, 37
   orig: 37, 37
+  offset: 0, 0
+  index: -1
+mothership1
+  rotate: false
+  xy: 2, 47
+  size: 324, 434
+  orig: 324, 434
+  offset: 0, 0
+  index: -1
+mothership2
+  rotate: false
+  xy: 328, 394
+  size: 169, 87
+  orig: 169, 87
   offset: 0, 0
   index: -1
 star1
@@ -20,7 +41,7 @@ star1
   index: -1
 tp_ray
   rotate: false
-  xy: 2, 47
+  xy: 328, 264
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

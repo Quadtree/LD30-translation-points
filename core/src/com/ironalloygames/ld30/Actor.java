@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ironalloygames.ld30.world.World;
 
@@ -49,7 +50,7 @@ public class Actor {
 		this.world = world;
 
 		BodyDef bd = new BodyDef();
-		bd.type = BodyDef.BodyType.DynamicBody;
+		bd.type = getBodyType();
 		bd.position.set(position);
 		bd.linearVelocity.set(velocity);
 		bd.angle = angle;
@@ -59,6 +60,10 @@ public class Actor {
 
 		if (originalWorld == null)
 			originalWorld = world;
+	}
+
+	protected BodyType getBodyType() {
+		return BodyDef.BodyType.DynamicBody;
 	}
 
 	public void exitingWorld(World world) {
