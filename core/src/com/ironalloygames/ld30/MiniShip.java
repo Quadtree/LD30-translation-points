@@ -55,6 +55,13 @@ public class MiniShip extends Actor {
 	public void render() {
 		super.render();
 		drawDefault("mini_ship");
+
+		if (thrust == 1)
+			drawDefault("mini_ship_jet_rear");
+		if (strafe == 1)
+			drawDefault("mini_ship_jet_left");
+		if (strafe == -1)
+			drawDefault("mini_ship_jet_right");
 	}
 
 	@Override

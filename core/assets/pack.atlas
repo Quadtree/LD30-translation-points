@@ -1,117 +1,138 @@
 
 pack.png
-size: 1022,509
+size: 1022,510
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 asteroid
   rotate: false
-  xy: 955, 163
+  xy: 955, 164
   size: 48, 61
   orig: 48, 61
   offset: 0, 0
   index: -1
 bolt
   rotate: false
-  xy: 762, 34
+  xy: 241, 67
   size: 26, 7
   orig: 26, 7
   offset: 0, 0
   index: -1
 fragment
   rotate: false
-  xy: 998, 485
+  xy: 998, 486
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 gem
   rotate: false
-  xy: 286, 40
+  xy: 858, 12
   size: 33, 33
   orig: 33, 33
   offset: 0, 0
   index: -1
 happy_flower
   rotate: false
-  xy: 955, 113
+  xy: 955, 114
   size: 58, 48
   orig: 58, 48
   offset: 0, 0
   index: -1
 happy_orb
   rotate: false
-  xy: 654, 29
+  xy: 654, 30
   size: 106, 106
   orig: 106, 106
   offset: 0, 0
   index: -1
 mini_ship
   rotate: false
-  xy: 2, 2
+  xy: 2, 3
   size: 37, 37
   orig: 37, 37
   offset: 0, 0
   index: -1
+mini_ship_jet_left
+  rotate: false
+  xy: 813, 47
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+mini_ship_jet_rear
+  rotate: false
+  xy: 863, 47
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+mini_ship_jet_right
+  rotate: false
+  xy: 913, 47
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 mothership1
   rotate: false
-  xy: 2, 75
+  xy: 2, 76
   size: 324, 434
   orig: 324, 434
   offset: 0, 0
   index: -1
 mothership2
   rotate: false
-  xy: 654, 137
+  xy: 654, 138
   size: 169, 87
   orig: 169, 87
   offset: 0, 0
   index: -1
 mothership3
   rotate: false
-  xy: 328, 75
+  xy: 328, 76
   size: 324, 434
   orig: 324, 434
   offset: 0, 0
   index: -1
 ray
   rotate: false
-  xy: 654, 226
+  xy: 654, 227
   size: 342, 283
   orig: 342, 283
   offset: 0, 0
   index: -1
 shark
   rotate: false
-  xy: 762, 43
+  xy: 762, 44
   size: 49, 92
   orig: 49, 92
   offset: 0, 0
   index: -1
 space_dust
   rotate: false
-  xy: 998, 459
+  xy: 998, 460
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 star1
   rotate: false
-  xy: 241, 30
+  xy: 813, 2
   size: 43, 43
   orig: 43, 43
   offset: 0, 0
   index: -1
 tp_ray
   rotate: false
-  xy: 825, 96
+  xy: 825, 97
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 2, 41
+  xy: 2, 42
   size: 237, 32
   orig: 237, 32
   offset: 0, 0
