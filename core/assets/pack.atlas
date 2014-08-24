@@ -46,6 +46,13 @@ ray
   orig: 342, 283
   offset: 0, 0
   index: -1
+space_dust
+  rotate: false
+  xy: 998, 431
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
 star1
   rotate: false
   xy: 2, 2

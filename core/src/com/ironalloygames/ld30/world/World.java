@@ -31,8 +31,8 @@ public abstract class World implements ContactListener {
 	public final Vector2 pivot = new Vector2(0, 0);
 
 	ArrayList<Transfer> transferQueue = new ArrayList<World.Transfer>();
-	public World worldAbove;
 
+	public World worldAbove;
 	public World worldBelow;
 
 	public World() {
@@ -137,6 +137,10 @@ public abstract class World implements ContactListener {
 		return 0.99f;
 	}
 
+	protected int getNumSpaceDust() {
+		return 20;
+	}
+
 	public float getScale() {
 		return 1;
 	}
@@ -150,6 +154,7 @@ public abstract class World implements ContactListener {
 	}
 
 	public void render() {
+
 		for (Actor a : actors) {
 			a.render();
 		}

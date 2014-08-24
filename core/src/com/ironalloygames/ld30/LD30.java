@@ -3,10 +3,14 @@ package com.ironalloygames.ld30;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ld30.world.FireWorld;
 import com.ironalloygames.ld30.world.Happyspace;
 import com.ironalloygames.ld30.world.Hyperspace;
@@ -36,6 +40,8 @@ public class LD30 extends ApplicationAdapter {
 	Texture img;
 
 	float r = 0;
+
+	ArrayList<Vector2> spaceDust = new ArrayList<Vector2>();
 
 	@Override
 	public void create() {
@@ -77,6 +83,17 @@ public class LD30 extends ApplicationAdapter {
 		cam = new OrthographicCamera(1024 / METER_SCALE, 768 / METER_SCALE);
 		cam.position.y = 50;
 		cam.update();
+
+		createSpaceDust();
+	}
+
+	public void createSpaceDust() {
+		for (int i = 0; i < 100; i++) {
+			if (spaceDust.size() - 1 < i) {
+				spaceDust.add(new Vector2(0, 0));
+			}
+			spaceDust.get(i).set(cam.position.x + MathUtils.random(-200, 200), cam.position.x + MathUtils.random(-200, 200));
+		}
 	}
 
 	@Override
@@ -98,6 +115,28 @@ public class LD30 extends ApplicationAdapter {
 		}
 		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
+
+		Sprite spaceDustSprite = a.getSprite("space_dust");
+		Color c = currentWorld.getColor();
+		c.a = 0.25f;
+		batch.setColor(c);
+		Vector2 pcVel = new Vector2(0, 0);
+
+		if (pc != null)
+			pcVel = pc.velocity.cpy();
+
+		for (Vector2 v2 : spaceDust) {
+			if (Math.abs(v2.x - cam.position.x) > 200 || Math.abs(v2.y - cam.position.y) > 200) {
+				if (MathUtils.randomBoolean()) {
+					v2.x = MathUtils.random(-200, 200) + cam.position.x;
+					v2.y = MathUtils.random(0, 1) * 400 - 200 + cam.position.y;
+				} else {
+					v2.x = MathUtils.random(0, 1) * 400 - 200 + cam.position.x;
+					v2.y = MathUtils.random(-200, 200) + cam.position.y;
+				}
+			}
+			batch.draw(spaceDustSprite, v2.x, v2.y, .5f, .5f, 1, 1, Math.max(pcVel.len() / 16, 1), 1, pcVel.angle());
+		}
 
 		currentWorld.render();
 
