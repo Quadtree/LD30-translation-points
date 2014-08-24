@@ -212,7 +212,7 @@ public class Mothership extends Actor {
 
 						towBeamTargets.add(a.position.cpy());
 
-						if (position.dst2(a.position) < 50 * 50 && a instanceof MothershipEngine) {
+						if (position.dst2(a.position) < 50 * 50 && a instanceof MothershipEngine && ((MothershipEngine) a).offTimer > 600 * 3) {
 							a.hp = -1000;
 							this.hasEngine = true;
 						}

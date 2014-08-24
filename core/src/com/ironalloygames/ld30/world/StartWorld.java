@@ -24,6 +24,14 @@ public class StartWorld extends World {
 		addActor(pt);
 		addActor(ms);
 
+		Gem g1 = new Gem();
+		g1.setPosition(new Vector2(20, 120));
+		g1.setVelocity(new Vector2(1, -1));
+		g1.setAngle(MathUtils.random(MathUtils.PI2));
+		g1.setAngularVelocity(MathUtils.random(MathUtils.PI));
+
+		addActor(g1);
+
 		for (int i = 0; i < 5; i++) {
 			Gem g = new Gem();
 			g.setPosition(new Vector2(MathUtils.random(-RADIUS, RADIUS), MathUtils.random(-RADIUS, RADIUS)));

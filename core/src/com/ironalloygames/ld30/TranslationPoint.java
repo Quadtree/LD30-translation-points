@@ -135,7 +135,7 @@ public class TranslationPoint extends Actor {
 
 						force *= 4;
 
-						a.body.setLinearVelocity(delta.cpy().scl(vel.len()));
+						a.body.setLinearVelocity(delta.cpy().scl(Math.max(vel.len(), 15)));
 
 						float pt = (float) Math.sqrt(dist2) / GRAB_RANGE;
 						a.transPointScale = pt;
@@ -147,7 +147,7 @@ public class TranslationPoint extends Actor {
 						}
 					}
 
-					if (a.lastTranslationPoint != this || (dist2 < (GRAB_RANGE * GRAB_RANGE)))
+					if (a.lastTranslationPoint != this)
 						a.body.applyLinearImpulse(delta.scl(GRAVITY_FORCE).scl(force).scl(a.body.getMass()), a.body.getWorldCenter(), true);
 				}
 			}

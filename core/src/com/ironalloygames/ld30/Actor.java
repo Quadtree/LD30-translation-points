@@ -198,6 +198,10 @@ public class Actor {
 		this.angle = angle;
 	}
 
+	public void setAngularVelocity(float vel) {
+		this.angularVelocity = vel;
+	}
+
 	public void setCollidable(boolean collidable) {
 		if (collidable != oldCollidable) {
 			for (Fixture f : body.getFixtureList()) {
@@ -235,6 +239,10 @@ public class Actor {
 		}
 	}
 
+	public void setVelocity(Vector2 vel) {
+		this.velocity.set(vel);
+	}
+
 	public void takeDamage(float damage) {
 		hp -= damage;
 	}
@@ -265,6 +273,8 @@ public class Actor {
 		body.setLinearVelocity(velocity.cpy().scl(MathUtils.clamp(world.getDragCoeff() + this.getDragModifier(), 0, 1)));
 		angle = body.getAngle();
 		angularVelocity = body.getAngularVelocity();
+		angularVelocity *= MathUtils.clamp(world.getDragCoeff() + this.getDragModifier(), 0, 1);
+		body.setAngularVelocity(angularVelocity);
 
 		if (immuneTranslationPoint != null) {
 			float dist = immuneTranslationPoint.position.dst(position);

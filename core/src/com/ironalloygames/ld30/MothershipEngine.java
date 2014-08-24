@@ -7,6 +7,8 @@ import com.ironalloygames.ld30.world.World;
 
 public class MothershipEngine extends Actor {
 
+	public int offTimer = 0;
+
 	public MothershipEngine() {
 		angle = MathUtils.PI / 2;
 		LD30.mothershipEngine = this;
@@ -43,6 +45,13 @@ public class MothershipEngine extends Actor {
 		super.render();
 
 		this.drawDefault("mothership2");
+	}
+
+	@Override
+	public void update() {
+		super.update();
+
+		offTimer++;
 	}
 
 }
