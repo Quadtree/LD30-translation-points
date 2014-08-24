@@ -52,6 +52,7 @@ public class Star extends Actor {
 		burnSensor = body.createFixture(fd);
 
 		CircleShape cs2 = new CircleShape();
+		cs2.setRadius(5);
 		body.createFixture(cs2, 0.2f);
 	}
 

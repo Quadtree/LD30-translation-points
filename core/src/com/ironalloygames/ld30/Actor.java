@@ -180,6 +180,9 @@ public class Actor {
 
 	public void update() {
 
+		if (body == null)
+			return;
+
 		if (!collisionGroupSetup) {
 			setupCollisionGroups();
 			collisionGroupSetup = true;
