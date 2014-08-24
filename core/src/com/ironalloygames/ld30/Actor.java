@@ -84,6 +84,10 @@ public class Actor {
 			return new Vector2(0, 0);
 	}
 
+	public boolean isInvulnerable() {
+		return false;
+	}
+
 	public boolean isTranslatable() {
 		return true;
 	}

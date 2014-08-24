@@ -22,7 +22,7 @@ public class Star extends Actor {
 	public void beginContact(Actor other, Fixture localFixture) {
 		super.beginContact(other, localFixture);
 
-		if (localFixture == burnSensor && !(other instanceof Star)) {
+		if (localFixture == burnSensor && !(other instanceof Star) && !other.isInvulnerable()) {
 
 			inBurnRange.add(other);
 		}

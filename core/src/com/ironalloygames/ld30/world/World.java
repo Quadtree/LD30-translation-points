@@ -3,7 +3,6 @@ package com.ironalloygames.ld30.world;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -85,19 +84,30 @@ public abstract class World implements ContactListener {
 	}
 
 	public boolean fixPosition(Vector2 pos) {
-		if (pos.dst2(pivot) > (RADIUS * RADIUS)) {
-			float angle = pivot.cpy().sub(pos).angleRad();
-			// angle += MathUtils.PI;
 
-			// Vector2 oldPos = pos.cpy();
-			pos.set(pivot.cpy().add(MathUtils.cos(angle) * RADIUS, MathUtils.sin(angle) * RADIUS));
+		boolean fixed = false;
 
-			// System.out.println(oldPos + " -> " + pos);
-
-			return true;
+		if (pos.x > pivot.x + RADIUS) {
+			pos.add(-RADIUS * 2, 0);
+			fixed = true;
 		}
 
-		return false;
+		if (pos.x < pivot.x - RADIUS) {
+			pos.add(RADIUS * 2, 0);
+			fixed = true;
+		}
+
+		if (pos.y > pivot.y + RADIUS) {
+			pos.add(0, -RADIUS * 2);
+			fixed = true;
+		}
+
+		if (pos.y < pivot.y - RADIUS) {
+			pos.add(0, RADIUS * 2);
+			fixed = true;
+		}
+
+		return fixed;
 	}
 
 	public Color getColor() {

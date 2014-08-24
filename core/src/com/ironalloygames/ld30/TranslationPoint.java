@@ -15,7 +15,7 @@ import com.ironalloygames.ld30.world.World;
 public class TranslationPoint extends Actor {
 
 	public static final float GRAB_RANGE = 12;
-	private static final float GRAVITY_FORCE = 20;
+	private static final float GRAVITY_FORCE = 0.2f;
 	private static final int GRAVITY_RANGE = 60;
 	private static final float JUMP_RANGE = .2f;
 
@@ -71,6 +71,11 @@ public class TranslationPoint extends Actor {
 		fd.density = 0;
 
 		body.createFixture(fd);
+	}
+
+	@Override
+	public boolean isInvulnerable() {
+		return true;
 	}
 
 	@Override
@@ -132,7 +137,7 @@ public class TranslationPoint extends Actor {
 					}
 
 					if (a.lastTranslationPoint != this || (dist2 < (GRAB_RANGE * GRAB_RANGE)))
-						a.body.applyLinearImpulse(delta.scl(force).scl(GRAVITY_FORCE), a.body.getWorldCenter(), true);
+						a.body.applyLinearImpulse(delta.scl(GRAVITY_FORCE).scl(force).scl(a.body.getMass()), a.body.getWorldCenter(), true);
 				}
 			}
 		}
