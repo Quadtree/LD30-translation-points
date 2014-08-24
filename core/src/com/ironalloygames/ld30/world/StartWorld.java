@@ -2,8 +2,11 @@ package com.ironalloygames.ld30.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.ironalloygames.ld30.Asteroid;
 import com.ironalloygames.ld30.CapitalTranslationPoint;
+import com.ironalloygames.ld30.Gem;
 import com.ironalloygames.ld30.LD30;
 import com.ironalloygames.ld30.Mothership;
 import com.ironalloygames.ld30.PlayerMiniShip;
@@ -22,6 +25,20 @@ public class StartWorld extends World {
 
 		addActor(pt);
 		addActor(ms);
+
+		for (int i = 0; i < 10; i++) {
+			Gem g = new Gem();
+			g.setPosition(new Vector2(MathUtils.random(-RADIUS, RADIUS), MathUtils.random(-RADIUS, RADIUS)));
+			addActor(g);
+
+			int c = MathUtils.random(2, 5);
+
+			for (int j = 0; j < c; j++) {
+				Asteroid ast = new Asteroid();
+				ast.setPosition(g.getPosition().add(MathUtils.random(-4, 4), MathUtils.random(-4, 4)));
+				addActor(ast);
+			}
+		}
 	}
 
 	@Override

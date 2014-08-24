@@ -29,19 +29,31 @@ public class LD30 extends ApplicationAdapter {
 	public static Mothership mothership = null;
 	public static MothershipEngine mothershipEngine = null;
 
-	public static PlayerMiniShip pc;
+	public static boolean needToCreateSpaceDust = false;
 
+	public static PlayerMiniShip pc;
 	public static int respawnTimer = 360;
+
+	static ArrayList<Vector2> spaceDust = new ArrayList<Vector2>();
 	public static ShapeRenderer sr;
 
 	public static ArrayList<World> worlds = new ArrayList<World>();
+
+	public static void createSpaceDust() {
+		System.out.println("Creating space dust");
+		for (int i = 0; i < 100; i++) {
+			if (spaceDust.size() - 1 < i) {
+				spaceDust.add(new Vector2(0, 0));
+			}
+			spaceDust.get(i).set(cam.position.x + MathUtils.random(-200, 200), cam.position.x + MathUtils.random(-200, 200));
+		}
+	}
+
 	World currentWorld;
 
 	Texture img;
 
 	float r = 0;
-
-	ArrayList<Vector2> spaceDust = new ArrayList<Vector2>();
 
 	@Override
 	public void create() {
@@ -87,15 +99,6 @@ public class LD30 extends ApplicationAdapter {
 		createSpaceDust();
 	}
 
-	public void createSpaceDust() {
-		for (int i = 0; i < 100; i++) {
-			if (spaceDust.size() - 1 < i) {
-				spaceDust.add(new Vector2(0, 0));
-			}
-			spaceDust.get(i).set(cam.position.x + MathUtils.random(-200, 200), cam.position.x + MathUtils.random(-200, 200));
-		}
-	}
-
 	@Override
 	public void render() {
 
@@ -113,6 +116,12 @@ public class LD30 extends ApplicationAdapter {
 			cam.position.y = pc.getPosition().y;
 			cam.update();
 		}
+
+		if (needToCreateSpaceDust) {
+			createSpaceDust();
+			needToCreateSpaceDust = false;
+		}
+
 		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
 

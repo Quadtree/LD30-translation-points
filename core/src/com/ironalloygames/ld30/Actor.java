@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ironalloygames.ld30.world.World;
 
@@ -13,16 +14,22 @@ public class Actor {
 	float angle;
 	float angularVelocity;
 	Body body;
+	boolean collisionGroupSetup = false;
 	float hp = Float.MAX_VALUE;
 	public TranslationPoint immuneTranslationPoint;
-	public TranslationPoint lastTranslationPoint;
-	public World originalWorld;
+	Boolean isDefaultSensor = null;
 
+	public TranslationPoint lastTranslationPoint;
+
+	public boolean oldCollidable = true;
+
+	public World originalWorld;
 	Vector2 position;
 
 	public float transPointScale = 1;
 
 	Vector2 velocity;
+
 	public World world;
 
 	public Actor() {
@@ -39,7 +46,7 @@ public class Actor {
 
 	public void drawDefault(String graphic) {
 		Sprite s = LD30.a.getSprite(graphic);
-		LD30.batch.setColor(originalWorld.getColor());
+		setColorForDefaultDraw();
 		LD30.batch.draw(s, getPosition().x, getPosition().y, .5f, .5f, 1, 1, s.getWidth() / LD30.METER_SCALE * transPointScale, s.getHeight() / LD30.METER_SCALE * transPointScale, body.getAngle() * (180 / MathUtils.PI) - 90);
 	}
 
@@ -62,6 +69,9 @@ public class Actor {
 
 		if (originalWorld == null)
 			originalWorld = world;
+
+		oldCollidable = true;
+		collisionGroupSetup = false;
 	}
 
 	public void exitingWorld(World world) {
@@ -123,10 +133,45 @@ public class Actor {
 		this.angle = angle;
 	}
 
+	public void setCollidable(boolean collidable) {
+		if (collidable != oldCollidable) {
+			for (Fixture f : body.getFixtureList()) {
+				Filter flt = f.getFilterData();
+
+				if (collidable)
+					flt.maskBits = 3;
+				else
+					flt.maskBits = 2;
+
+				f.setFilterData(flt);
+			}
+		}
+
+		oldCollidable = collidable;
+	}
+
+	protected void setColorForDefaultDraw() {
+		LD30.batch.setColor(originalWorld.getColor());
+	}
+
 	public void setPosition(Vector2 pos) {
 		this.position = pos.cpy();
 		if (body != null)
 			body.setTransform(pos.cpy(), getAngle());
+	}
+
+	void setupCollisionGroups() {
+		for (Fixture f : body.getFixtureList()) {
+			Filter flt = f.getFilterData();
+			if (f.isSensor()) {
+				flt.categoryBits = 2;
+				flt.maskBits = 3;
+			} else {
+				flt.categoryBits = 1;
+				flt.maskBits = 3;
+			}
+			f.setFilterData(flt);
+		}
 	}
 
 	public void takeDamage(float damage) {
@@ -134,6 +179,12 @@ public class Actor {
 	}
 
 	public void update() {
+
+		if (!collisionGroupSetup) {
+			setupCollisionGroups();
+			collisionGroupSetup = true;
+		}
+
 		position = body.getPosition().cpy();
 
 		if (world.fixPosition(position))

@@ -1,68 +1,82 @@
 
 pack.png
-size: 1022,481
+size: 1022,499
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+asteroid
+  rotate: false
+  xy: 2, 2
+  size: 48, 61
+  orig: 48, 61
+  offset: 0, 0
+  index: -1
 fragment
   rotate: false
-  xy: 998, 457
+  xy: 998, 475
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
+gem
+  rotate: false
+  xy: 52, 30
+  size: 33, 33
+  orig: 33, 33
+  offset: 0, 0
+  index: -1
 mini_ship
   rotate: false
-  xy: 654, 70
+  xy: 955, 177
   size: 37, 37
   orig: 37, 37
   offset: 0, 0
   index: -1
 mothership1
   rotate: false
-  xy: 2, 47
+  xy: 2, 65
   size: 324, 434
   orig: 324, 434
   offset: 0, 0
   index: -1
 mothership2
   rotate: false
-  xy: 654, 109
+  xy: 654, 127
   size: 169, 87
   orig: 169, 87
   offset: 0, 0
   index: -1
 mothership3
   rotate: false
-  xy: 328, 47
+  xy: 328, 65
   size: 324, 434
   orig: 324, 434
   offset: 0, 0
   index: -1
 ray
   rotate: false
-  xy: 654, 198
+  xy: 654, 216
   size: 342, 283
   orig: 342, 283
   offset: 0, 0
   index: -1
 space_dust
   rotate: false
-  xy: 998, 431
+  xy: 998, 449
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 star1
   rotate: false
-  xy: 2, 2
+  xy: 654, 82
   size: 43, 43
   orig: 43, 43
   offset: 0, 0
   index: -1
 tp_ray
   rotate: false
-  xy: 825, 68
+  xy: 825, 86
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.ironalloygames.ld30.Actor;
+import com.ironalloygames.ld30.LD30;
 import com.ironalloygames.ld30.TranslationPoint;
 
 public abstract class World implements ContactListener {
@@ -184,6 +185,10 @@ public abstract class World implements ContactListener {
 			transferQueue.get(0).a.exitingWorld(this);
 			transferQueue.get(0).a.setPosition(transferQueue.get(0).p);
 			transferQueue.get(0).d.addActor(transferQueue.get(0).a);
+
+			if (transferQueue.get(0).a == LD30.pc)
+				LD30.needToCreateSpaceDust = true;
+
 			actors.remove(transferQueue.get(0).a);
 			transferQueue.remove(0);
 		}
@@ -201,6 +206,10 @@ public abstract class World implements ContactListener {
 				actors.get(i).destroyed();
 				actors.remove(i--);
 			}
+		}
+
+		for (Actor a : actors) {
+			a.setCollidable(a.transPointScale > 0.99f);
 		}
 
 	}
