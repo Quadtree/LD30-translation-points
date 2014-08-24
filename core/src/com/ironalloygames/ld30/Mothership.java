@@ -191,7 +191,7 @@ public class Mothership extends Actor {
 			}
 		}
 
-		if (LD30.pc != null && LD30.pc.world == world && LD30.pc.position.dst2(position) < 110 * 110 && talkCooldown <= 0) {
+		if (LD30.pc != null && LD30.pc.world == world && LD30.pc.position.dst2(position) < 110 * 110 && talkCooldown <= 0 && !LD30.victoryDialogEverShown) {
 			talkCooldown = 1200;
 
 			this.addDialogue("Create some translation points to bring our engine back to this sector", new Vector2(40, 0), 600);

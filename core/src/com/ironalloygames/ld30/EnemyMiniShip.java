@@ -65,7 +65,14 @@ public class EnemyMiniShip extends MiniShip {
 	}
 
 	private void flee() {
-		createPointAtLoc(LD30.worlds.get(MathUtils.random(1, LD30.worlds.size() - 2)));
+
+		World dest = null;
+
+		do {
+			dest = LD30.worlds.get(MathUtils.random(LD30.worlds.size() - 1));
+		} while (dest instanceof FireWorld || dest instanceof NegativeWorld || dest instanceof StartWorld);
+
+		createPointAtLoc(dest);
 
 		TranslationPoint pt = world.findTranslationPointTo(getPosition(), null);
 
@@ -169,8 +176,12 @@ public class EnemyMiniShip extends MiniShip {
 			if (LD30.mothershipEngine.world == world && LD30.mothershipEngine.position.dst2(position) < 100 * 100) {
 				tractorBeamTarget = LD30.mothershipEngine.getPosition();
 
-				if (tow(LD30.mothershipEngine)) {
-					timeWithoutEngine = 0;
+				if (this.immuneTranslationPoint == null) {
+					if (tow(LD30.mothershipEngine)) {
+						timeWithoutEngine = 0;
+					}
+				} else {
+					this.thrust = 1;
 				}
 
 				// we have it now lets get out of here

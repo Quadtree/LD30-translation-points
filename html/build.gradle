@@ -50,6 +50,15 @@ task dist(dependsOn: [clean, compileGwt]) {
     }
 }
 
+task deploy(dependsOn: [dist]){
+	doLast {
+		copy {
+			from "build/dist"
+            into "Y:\\translation-points"
+        }
+    }
+}
+
 draftWar {
    from "war"
 }
