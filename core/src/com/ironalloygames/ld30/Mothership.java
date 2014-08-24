@@ -151,12 +151,22 @@ public class Mothership extends Actor {
 			this.addDialogue("Engine? Damnit!", new Vector2(35, 0), 120);
 
 		if (heyDialogTimer == 800) {
-			this.addDialogue("Exploration ship, please see if you can retrieve our engine.", new Vector2(30, 0), 220);
+			this.addDialogue("Exploration ship, please see if you can retrieve our engine.", new Vector2(50, 0), 1200);
 			firstSpawnPossible = true;
 		}
 
 		if (heyDialogTimer == 820)
-			this.addDialogue("And gems!!! ... If you want upgrades", new Vector2(25, 0), 220);
+			this.addDialogue("And gems!!! ... If you want upgrades", new Vector2(45, 0), 1200);
+
+		if (heyDialogTimer == 900) {
+			this.addDialogue("Create translation points to bring the engine back to this sector", new Vector2(40, 0), 1200);
+			firstSpawnPossible = true;
+		}
+
+		if (heyDialogTimer == 960) {
+			this.addDialogue("Then we'll pull it in. Also make sure that guy is gone, or he'll just steal it again!", new Vector2(35, 0), 1200);
+			firstSpawnPossible = true;
+		}
 
 		if (startTime < 140) {
 			body.setLinearVelocity(0, 15);

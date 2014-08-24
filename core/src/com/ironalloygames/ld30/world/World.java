@@ -98,7 +98,7 @@ public abstract class World implements ContactListener {
 		remoteEnd.otherEnd = localEnd;
 
 		localEnd.setPosition(pos);
-		remoteEnd.setPosition(pos.cpy());
+		remoteEnd.setPosition(destPos);
 
 		addActor(localEnd);
 		destination.addActor(remoteEnd);
