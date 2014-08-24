@@ -3,6 +3,8 @@ package com.ironalloygames.ld30;
 import java.util.HashMap;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -30,6 +32,28 @@ public class Assets {
 		return mgr.get(filename, BitmapFont.class);
 	}
 
+	public Music getMusic(String name) {
+		String filename = name + ".ogg";
+
+		if (!mgr.isLoaded(filename)) {
+			mgr.load(filename, Music.class);
+			return null;
+		}
+
+		return mgr.get(filename, Music.class);
+	}
+
+	public Sound getSound(String name) {
+		String filename = name + ".ogg";
+
+		if (!mgr.isLoaded(filename)) {
+			mgr.load(filename, Sound.class);
+			return null;
+		}
+
+		return mgr.get(filename, Sound.class);
+	}
+
 	public Sprite getSprite(String name) {
 		if (pack == null) {
 			mgr.load("pack.atlas", TextureAtlas.class);
@@ -53,5 +77,9 @@ public class Assets {
 		}
 
 		return mgr.get(filename, Texture.class);
+	}
+
+	public void update() {
+		mgr.update();
 	}
 }

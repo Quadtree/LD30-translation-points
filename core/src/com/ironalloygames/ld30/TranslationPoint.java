@@ -102,12 +102,12 @@ public class TranslationPoint extends Actor {
 		else
 			c = Color.YELLOW;
 
-		if (lifespan < 60) {
-			c.a = lifespan / 60f;
+		if (lifespan < 30) {
+			c.a = MathUtils.clamp(lifespan / 30f, 0, 1);
 		}
 
-		if (spawnStatus < 60) {
-			c.a = spawnStatus / 60f;
+		if (spawnStatus < 30) {
+			c.a = spawnStatus / 30f;
 		}
 
 		Sprite raySprite = LD30.a.getSprite("ray");

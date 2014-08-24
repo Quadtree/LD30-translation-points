@@ -198,5 +198,7 @@ public class LD30 extends ApplicationAdapter {
 				victoryDialogEverShown = true;
 			}
 		}
+
+		a.update();
 	}
 }

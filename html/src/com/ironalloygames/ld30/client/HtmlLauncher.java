@@ -7,13 +7,13 @@ import com.ironalloygames.ld30.LD30;
 
 public class HtmlLauncher extends GwtApplication {
 
-        @Override
-        public GwtApplicationConfiguration getConfig () {
-                return new GwtApplicationConfiguration(480, 320);
-        }
+	@Override
+	public ApplicationListener getApplicationListener() {
+		return new LD30();
+	}
 
-        @Override
-        public ApplicationListener getApplicationListener () {
-                return new LD30();
-        }
+	@Override
+	public GwtApplicationConfiguration getConfig() {
+		return new GwtApplicationConfiguration(1024, 768);
+	}
 }
