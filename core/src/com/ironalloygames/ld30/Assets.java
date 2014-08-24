@@ -3,6 +3,7 @@ package com.ironalloygames.ld30;
 import java.util.HashMap;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -41,5 +42,16 @@ public class Assets {
 		}
 
 		return sprites.get(name);
+	}
+
+	public Texture getTexture(String name) {
+		String filename = name + ".png";
+
+		if (!mgr.isLoaded(filename)) {
+			mgr.load(filename, Texture.class);
+			mgr.finishLoading();
+		}
+
+		return mgr.get(filename, Texture.class);
 	}
 }

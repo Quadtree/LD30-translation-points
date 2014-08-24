@@ -209,6 +209,11 @@ public class Mothership extends Actor {
 						a.body.applyLinearImpulse(impulse, a.body.getWorldCenter(), true);
 
 						towBeamTargets.add(a.position.cpy());
+
+						if (position.dst2(a.position) < 50 * 50 && a instanceof MothershipEngine) {
+							a.hp = -1000;
+							this.hasEngine = true;
+						}
 					}
 				}
 			}

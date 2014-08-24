@@ -21,6 +21,10 @@ public class EnemyMiniShip extends MiniShip {
 
 	Vector2 tractorBeamTarget = null;
 
+	public EnemyMiniShip() {
+		LD30.enemyMiniShip = this;
+	}
+
 	public boolean approach(Actor a) {
 		if (a.world == this.world) {
 
