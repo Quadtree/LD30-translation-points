@@ -20,6 +20,11 @@ public class Subspace extends World {
 		return new Color(0.5f, 0.5f, 0.5f, 1);
 	}
 
+	@Override
+	public float getDragCoeff() {
+		return 0.95f;
+	}
+
 	private void randomWind() {
 		wind.x = MathUtils.random(-3, 3);
 		wind.y = MathUtils.random(-3, 3);

@@ -57,7 +57,7 @@ public class Bolt extends Actor {
 
 	@Override
 	public float getDragModifier() {
-		return 0.1f;
+		return 0.02f;
 	}
 
 	@Override

@@ -7,6 +7,9 @@ import com.ironalloygames.ld30.Actor;
 
 public class NegativeWorld extends World {
 
+	public NegativeWorld() {
+	}
+
 	@Override
 	public Color getColor() {
 		return new Color(0, 0.2f, 0.2f, 1);

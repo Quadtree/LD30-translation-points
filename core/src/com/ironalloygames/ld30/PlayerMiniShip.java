@@ -70,6 +70,10 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 		if (keycode == Keys.RIGHT || keycode == Keys.D)
 			strafeRight = true;
 
+		if (keycode == Keys.H) {
+			LD30.helpShown = true;
+		}
+
 		if (inPurchaseRange && LD30.mothership != null && LD30.mothership.gems >= GEM_COST) {
 			if (keycode == Keys.NUM_1) {
 				hasShieldUpgrade = true;
@@ -133,12 +137,14 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 				String txt = text + " " + (int) delta.len() + "m";
 
 				TextBounds tb = LD30.a.getFont(16).getBounds(txt);
+				LD30.a.getFont(16).setColor(Color.WHITE);
 				LD30.a.getFont(16).draw(LD30.batch, txt, MathUtils.cos(angle) * 200 - tb.width / 2, MathUtils.sin(angle) * 200 - tb.height / 2);
 			}
 		}
 	}
 
 	public void renderUI() {
+
 		LD30.sr.setProjectionMatrix(uiCamera.combined);
 		LD30.sr.begin(ShapeType.Filled);
 
@@ -192,6 +198,9 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		setMousePos(screenX, screenY);
+
+		if (LD30.anyKeyPressed())
+			return false;
 
 		if (button == Buttons.LEFT && world.worldAbove != null) {
 			if (!world.addTranslationPoint(currentMousePos, world.worldAbove, 600))

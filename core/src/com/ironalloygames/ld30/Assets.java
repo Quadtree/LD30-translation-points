@@ -48,7 +48,7 @@ public class Assets {
 
 		if (!mgr.isLoaded(filename)) {
 			mgr.load(filename, Sound.class);
-			return null;
+			mgr.finishLoading(); // should be preloaded?
 		}
 
 		return mgr.get(filename, Sound.class);

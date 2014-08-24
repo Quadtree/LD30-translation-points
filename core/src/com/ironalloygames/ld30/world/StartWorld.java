@@ -24,7 +24,7 @@ public class StartWorld extends World {
 		addActor(pt);
 		addActor(ms);
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 5; i++) {
 			Gem g = new Gem();
 			g.setPosition(new Vector2(MathUtils.random(-RADIUS, RADIUS), MathUtils.random(-RADIUS, RADIUS)));
 
@@ -34,11 +34,11 @@ public class StartWorld extends World {
 
 			addActor(g);
 
-			int c = MathUtils.random(2, 7);
+			int c = MathUtils.random(2, 9);
 
 			for (int j = 0; j < c; j++) {
 				Asteroid ast = new Asteroid();
-				ast.setPosition(g.getPosition().add(MathUtils.random(-4, 4), MathUtils.random(-4, 4)));
+				ast.setPosition(g.getPosition().add(MathUtils.random(-7, 7), MathUtils.random(-7, 7)));
 				addActor(ast);
 			}
 		}

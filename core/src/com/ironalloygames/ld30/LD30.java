@@ -3,6 +3,9 @@ package com.ironalloygames.ld30;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -22,29 +25,31 @@ import com.ironalloygames.ld30.world.Subspace;
 import com.ironalloygames.ld30.world.WaterWorld;
 import com.ironalloygames.ld30.world.World;
 
-public class LD30 extends ApplicationAdapter {
+public class LD30 extends ApplicationAdapter implements InputProcessor {
 	public static Assets a;
 	public static SpriteBatch batch;
 	public static OrthographicCamera cam;
 	public static World currentWorld;
 	public static EnemyMiniShip enemyMiniShip = null;
-	public static final float METER_SCALE = 5f;
+	public static boolean helpShown = true;
 
+	public static final float METER_SCALE = 5f;
 	public static Mothership mothership = null;
+
 	public static MothershipEngine mothershipEngine = null;
 
 	public static boolean needToCreateSpaceDust = false;
-
 	public static PlayerMiniShip pc;
-	public static int respawnTimer = 0;
 
+	public static int respawnTimer = 0;
 	static ArrayList<Vector2> spaceDust = new ArrayList<Vector2>();
+
 	public static ShapeRenderer sr;
 
+	static boolean titleShown = true;
+
 	public static OrthographicCamera uiCamera;
-
 	public static boolean victoryDialogEverShown = false;
-
 	static boolean victoryDialogShown = false;
 
 	public static ArrayList<World> worlds = new ArrayList<World>();
@@ -52,6 +57,16 @@ public class LD30 extends ApplicationAdapter {
 	public static boolean anyKeyPressed() {
 		if (victoryDialogShown) {
 			victoryDialogShown = false;
+			return true;
+		}
+
+		if (titleShown) {
+			titleShown = false;
+			return true;
+		}
+
+		if (helpShown) {
+			helpShown = false;
 			return true;
 		}
 
@@ -129,7 +144,35 @@ public class LD30 extends ApplicationAdapter {
 		a.getSound("translation-point");
 		a.getSound("cant");
 		a.getSound("hit");
+
+		Gdx.input.setInputProcessor(this);
 	};
+
+	@Override
+	public boolean keyDown(int keycode) {
+		if (!LD30.anyKeyPressed() && keycode == Keys.H)
+			helpShown = true;
+
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 	@Override
 	public void render() {
@@ -163,8 +206,15 @@ public class LD30 extends ApplicationAdapter {
 			}
 		}
 
-		for (World w : worlds) {
-			w.updateIfNeeded();
+		if (titleShown || helpShown) {
+			for (World w : worlds) {
+				w.milisDone = System.currentTimeMillis();
+			}
+		} else {
+
+			for (World w : worlds) {
+				w.updateIfNeeded();
+			}
 		}
 
 		if (pc != null && pc.world != null)
@@ -233,6 +283,19 @@ public class LD30 extends ApplicationAdapter {
 			batch.draw(a.getTexture("victory_dialog"), -512 / 2, -384 / 2);
 		}
 
+		if (helpShown) {
+			batch.setColor(Color.WHITE);
+			batch.draw(a.getTexture("helpscreen"), -824 / 2, -320 / 2);
+		}
+
+		if (titleShown) {
+			batch.setColor(Color.WHITE);
+			batch.draw(a.getTexture("title"), -1024 / 2, -768 / 2);
+
+			a.getFont(16).setColor(Color.WHITE);
+			a.getFont(16).draw(batch, "Made by Quadtree for Ludum Dare 30", 1024 / 2 - 384, -768 / 2 + 25);
+		}
+
 		batch.end();
 
 		if (!victoryDialogEverShown) {
@@ -243,5 +306,29 @@ public class LD30 extends ApplicationAdapter {
 		}
 
 		a.update();
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		LD30.anyKeyPressed();
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
