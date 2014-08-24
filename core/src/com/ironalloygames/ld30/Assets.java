@@ -37,7 +37,7 @@ public class Assets {
 
 		if (!mgr.isLoaded(filename)) {
 			mgr.load(filename, Music.class);
-			return null;
+			mgr.finishLoading();
 		}
 
 		return mgr.get(filename, Music.class);

@@ -15,7 +15,7 @@ import com.ironalloygames.ld30.world.World;
 
 public class PlayerMiniShip extends MiniShip implements InputProcessor {
 
-	public static final int GEM_COST = 4;
+	public static final int GEM_COST = 2;
 
 	boolean braking = false;
 	Vector2 currentMousePos = new Vector2();
@@ -203,12 +203,12 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 			return false;
 
 		if (button == Buttons.LEFT && world.worldAbove != null) {
-			if (!world.addTranslationPoint(currentMousePos, world.worldAbove, 600))
+			if (!world.addTranslationPoint(currentMousePos, world.worldAbove, 280))
 				LD30.a.getSound("cant").play();
 		}
 
 		if (button == Buttons.RIGHT && world.worldBelow != null) {
-			if (!world.addTranslationPoint(currentMousePos, world.worldBelow, 600))
+			if (!world.addTranslationPoint(currentMousePos, world.worldBelow, 280))
 				LD30.a.getSound("cant").play();
 		}
 

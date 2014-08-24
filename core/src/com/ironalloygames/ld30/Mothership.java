@@ -179,7 +179,7 @@ public class Mothership extends Actor {
 		}
 
 		if (LD30.pc != null && LD30.pc.world == world && LD30.pc.position.dst2(position) < 200 * 200 && LD30.pc.hp < LD30.pc.getMaxHP()) {
-			LD30.pc.hp = Math.min(LD30.pc.hp + 0.005f, LD30.pc.getMaxHP());
+			LD30.pc.hp = Math.min(LD30.pc.hp + 0.002f, LD30.pc.getMaxHP());
 
 		}
 

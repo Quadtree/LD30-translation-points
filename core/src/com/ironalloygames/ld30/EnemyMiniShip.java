@@ -28,26 +28,25 @@ public class EnemyMiniShip extends MiniShip {
 	public boolean approach(Actor a) {
 		if (a.world == this.world) {
 
-			// System.out.print("Closing on target... " + a.getPosition());
+			System.out.print("Closing on target... " + a.getPosition() + "\n");
 			return moveTowardsPoint(a.getPosition());
 		} else {
 			// we need to planeshift!
 			TranslationPoint existing = world.findTranslationPointTo(position, a.world);
-			// System.out.println("Need to planeshift!");
+			System.out.println("Need to planeshift!");
 
 			if (existing != null) {
-				// System.out.println("Approaching translation point " +
-				// existing.getPosition());
+				System.out.println("Approaching translation point " + existing.getPosition());
 				moveTowardsPoint(existing.getPosition());
 			} else {
 				// okay, can we create one?
 				if (pointCreationCooldown <= 0) {
 					createPointAtLoc(a.world);
-					// System.out.println("Creating translation point");
+					System.out.println("Creating translation point");
 				} else {
 					// wait till it comes up...
 					randomWalk();
-					// System.out.println("Random walk");
+					System.out.println("Random walk");
 				}
 			}
 		}
@@ -58,7 +57,7 @@ public class EnemyMiniShip extends MiniShip {
 	private boolean createPointAtLoc(World dest) {
 		if (pointCreationCooldown <= 0) {
 			world.addTranslationPoint(getPosition(), dest, 280);
-			pointCreationCooldown = 1200;
+			pointCreationCooldown = 400;
 			return true;
 		}
 		return false;
@@ -155,7 +154,7 @@ public class EnemyMiniShip extends MiniShip {
 			lastThreat = 240;
 
 			if (shotCooldown <= 0) {
-				Bolt.shoot(this, getPosition(), LD30.pc.position.cpy().sub(position).angleRad(), 400, 0.05f);
+				Bolt.shoot(this, getPosition(), LD30.pc.position.cpy().sub(position).angleRad(), 400, 0.35f);
 				shotCooldown = 30;
 			}
 		}
