@@ -21,8 +21,8 @@ public class Subspace extends World {
 	}
 
 	private void randomWind() {
-		wind.x = MathUtils.random(-10, 10);
-		wind.y = MathUtils.random(-10, 10);
+		wind.x = MathUtils.random(-3, 3);
+		wind.y = MathUtils.random(-3, 3);
 	}
 
 	@Override

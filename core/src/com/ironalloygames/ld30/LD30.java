@@ -3,6 +3,7 @@ package com.ironalloygames.ld30;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -65,9 +66,15 @@ public class LD30 extends ApplicationAdapter {
 		}
 	}
 
+	Music currentlyPlayingMusic = null;
+
+	int currentMusicWorld = -1;
+
 	World currentWorld;
 
 	Texture img;
+
+	int noMusicTime = 0;
 
 	float r = 0;
 
@@ -115,10 +122,38 @@ public class LD30 extends ApplicationAdapter {
 		uiCamera = new OrthographicCamera(1024, 768);
 
 		createSpaceDust();
-	}
+	};
 
 	@Override
 	public void render() {
+
+		int currentWorldIndex = worlds.indexOf(currentWorld);
+
+		if (currentWorldIndex != currentMusicWorld && currentlyPlayingMusic != null) {
+			System.out.println("Musical dissonance detected" + currentWorldIndex + " " + currentMusicWorld);
+			currentlyPlayingMusic.setVolume(currentlyPlayingMusic.getVolume() - 0.01f);
+
+			if (currentlyPlayingMusic.getVolume() < 0.01f) {
+				currentlyPlayingMusic.stop();
+				currentlyPlayingMusic = null;
+			}
+		}
+
+		if (currentlyPlayingMusic == null) {
+			noMusicTime++;
+		} else {
+			noMusicTime = 0;
+		}
+
+		if (noMusicTime > 180) {
+			currentlyPlayingMusic = a.getMusic("world" + currentWorldIndex);
+
+			if (currentlyPlayingMusic != null) {
+				currentlyPlayingMusic.setVolume(0.25f);
+				currentlyPlayingMusic.play();
+				currentMusicWorld = currentWorldIndex;
+			}
+		}
 
 		for (World w : worlds) {
 			w.updateIfNeeded();

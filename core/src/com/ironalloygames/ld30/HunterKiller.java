@@ -1,6 +1,7 @@
 package com.ironalloygames.ld30;
 
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ironalloygames.ld30.world.World;
 
 public class HunterKiller extends Actor {
@@ -18,7 +19,12 @@ public class HunterKiller extends Actor {
 		CircleShape cs2 = new CircleShape();
 		cs2.setRadius(5);
 
-		body.createFixture(cs2, 1);
+		FixtureDef fd = new FixtureDef();
+		fd.shape = cs2;
+		fd.filter.groupIndex = -7;
+		fd.density = 1;
+
+		body.createFixture(fd);
 	}
 
 	@Override
