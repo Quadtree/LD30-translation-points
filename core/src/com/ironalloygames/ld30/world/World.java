@@ -165,6 +165,12 @@ public abstract class World implements ContactListener {
 
 	}
 
+	public void renderDialogue() {
+		for (Actor a : actors) {
+			a.renderDialogue();
+		}
+	}
+
 	public void transferActor(Actor a, World dest, Vector2 newPos) {
 		Transfer t = new Transfer();
 		t.a = a;

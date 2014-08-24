@@ -1,9 +1,13 @@
 package com.ironalloygames.ld30;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -12,19 +16,28 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ironalloygames.ld30.world.World;
 
 public class Actor {
+	class Dialogue {
+		Vector2 location;
+		String text;
+		int ttl;
+	}
+
 	float angle;
 	float angularVelocity;
 	Body body;
 	boolean collisionGroupSetup = false;
+	ArrayList<Dialogue> currentDialogue = new ArrayList<Dialogue>();
 	float hp = Float.MAX_VALUE;
+
 	public TranslationPoint immuneTranslationPoint;
+
 	Boolean isDefaultSensor = null;
 
 	public TranslationPoint lastTranslationPoint;
-
 	public boolean oldCollidable = true;
 
 	public World originalWorld;
+
 	Vector2 position;
 
 	public float transPointScale = 1;
@@ -36,6 +49,14 @@ public class Actor {
 	public Actor() {
 		position = new Vector2(0, 0);
 		velocity = new Vector2(0, 0);
+	}
+
+	public void addDialogue(String text, Vector2 location, int ttl) {
+		Dialogue d = new Dialogue();
+		d.text = text;
+		d.location = location;
+		d.ttl = ttl;
+		currentDialogue.add(d);
 	}
 
 	public void addWind(Vector2 wind) {
@@ -138,6 +159,27 @@ public class Actor {
 	public void render() {
 	}
 
+	public void renderDialogue() {
+		for (Dialogue d : currentDialogue) {
+			TextBounds bd = LD30.a.getFont(16).getBounds(d.text);
+
+			Vector2 pos = body.getWorldPoint(d.location).cpy();
+
+			Vector3 v3 = new Vector3(pos.x, pos.y, 0);
+
+			v3.mul(LD30.cam.combined);
+
+			// System.out.println(v3);
+
+			// LD30.sr.setColor(0, 0, 0, 0.5f);
+			// LD30.sr.rect(v3.x * 1024 / 2 - bd.width / 2, v3.y * 768 / 2 -
+			// bd.height / 2, bd.width, bd.height);
+
+			LD30.a.getFont(16).setColor(Color.YELLOW);
+			LD30.a.getFont(16).draw(LD30.batch, d.text, v3.x * 1024 / 2 - bd.width / 2, v3.y * 768 / 2 - bd.height / 2);
+		}
+	}
+
 	public void setAngle(float angle) {
 		if (body != null) {
 			body.setTransform(getPosition(), angle);
@@ -187,6 +229,13 @@ public class Actor {
 	}
 
 	public void update() {
+
+		for (int i = 0; i < currentDialogue.size(); i++) {
+			if (currentDialogue.get(i).ttl > 0)
+				currentDialogue.get(i).ttl--;
+			else
+				currentDialogue.remove(i--);
+		}
 
 		if (body == null)
 			return;

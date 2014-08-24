@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ld30.world.FireWorld;
@@ -25,17 +26,18 @@ public class LD30 extends ApplicationAdapter {
 	public static SpriteBatch batch;
 	public static OrthographicCamera cam;
 	public static final float METER_SCALE = 5f;
-
 	public static Mothership mothership = null;
-	public static MothershipEngine mothershipEngine = null;
 
+	public static MothershipEngine mothershipEngine = null;
 	public static boolean needToCreateSpaceDust = false;
 
 	public static PlayerMiniShip pc;
-	public static int respawnTimer = 360;
 
+	public static int respawnTimer = 360;
 	static ArrayList<Vector2> spaceDust = new ArrayList<Vector2>();
+
 	public static ShapeRenderer sr;
+	public static OrthographicCamera uiCamera;
 
 	public static ArrayList<World> worlds = new ArrayList<World>();
 
@@ -96,6 +98,8 @@ public class LD30 extends ApplicationAdapter {
 		cam.position.y = 50;
 		cam.update();
 
+		uiCamera = new OrthographicCamera(1024, 768);
+
 		createSpaceDust();
 	}
 
@@ -149,6 +153,17 @@ public class LD30 extends ApplicationAdapter {
 
 		currentWorld.render();
 
+		batch.end();
+
+		batch.setProjectionMatrix(uiCamera.combined);
+		batch.begin();
+
+		sr.setProjectionMatrix(uiCamera.combined);
+		sr.begin(ShapeType.Filled);
+
+		currentWorld.renderDialogue();
+
+		sr.end();
 		batch.end();
 
 		if (pc != null)
