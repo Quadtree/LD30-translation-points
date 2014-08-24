@@ -11,6 +11,8 @@ public class Mothership extends Actor {
 
 	int firstMessageTimer = 0;
 
+	boolean firstSpawnPossible = false;
+
 	public boolean hasEngine = true;
 
 	int heyDialogTimer = -100000000;
@@ -108,11 +110,13 @@ public class Mothership extends Actor {
 		if (heyDialogTimer == 650)
 			this.addDialogue("Engine? Damnit!", new Vector2(35, 0), 120);
 
-		if (heyDialogTimer == 800)
+		if (heyDialogTimer == 800) {
 			this.addDialogue("Exploration ship, please see if you can retrieve our engine.", new Vector2(30, 0), 220);
+			firstSpawnPossible = true;
+		}
 
 		if (heyDialogTimer == 820)
-			this.addDialogue("And gems!!!", new Vector2(25, 0), 220);
+			this.addDialogue("And gems!!! ... If you want upgrades", new Vector2(25, 0), 220);
 
 		if (startTime < 140) {
 			body.setLinearVelocity(0, 15);
@@ -121,6 +125,18 @@ public class Mothership extends Actor {
 		}
 
 		startTime++;
+
+		LD30.respawnTimer--;
+
+		if (LD30.pc == null && firstSpawnPossible) {
+
+			if (LD30.respawnTimer <= 0) {
+				PlayerMiniShip pc = new PlayerMiniShip();
+				LD30.pc = pc;
+				pc.setPosition(new Vector2(0, 90));
+				world.addActor(pc);
+			}
+		}
 	}
 
 }

@@ -7,9 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ld30.Asteroid;
 import com.ironalloygames.ld30.CapitalTranslationPoint;
 import com.ironalloygames.ld30.Gem;
-import com.ironalloygames.ld30.LD30;
 import com.ironalloygames.ld30.Mothership;
-import com.ironalloygames.ld30.PlayerMiniShip;
 
 public class StartWorld extends World {
 
@@ -53,15 +51,5 @@ public class StartWorld extends World {
 	protected void update() {
 		super.update();
 
-		if (LD30.pc == null) {
-			LD30.respawnTimer--;
-
-			if (LD30.respawnTimer <= 0) {
-				PlayerMiniShip pc = new PlayerMiniShip();
-				LD30.pc = pc;
-				pc.setPosition(new Vector2(0, 90));
-				addActor(pc);
-			}
-		}
 	}
 }
