@@ -132,6 +132,8 @@ public class TranslationPoint extends Actor {
 					if (dist2 < (GRAB_RANGE * GRAB_RANGE)) {
 						Vector2 vel = a.body.getLinearVelocity();
 
+						force *= 4;
+
 						a.body.setLinearVelocity(delta.cpy().scl(vel.len()));
 
 						float pt = (float) Math.sqrt(dist2) / GRAB_RANGE;

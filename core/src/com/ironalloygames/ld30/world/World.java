@@ -18,7 +18,7 @@ public abstract class World implements ContactListener {
 		Vector2 p;
 	}
 
-	public static float RADIUS = 500;
+	public static float RADIUS = 250;
 
 	ArrayList<Actor> actorAddQueue = new ArrayList<Actor>();
 
@@ -83,14 +83,23 @@ public abstract class World implements ContactListener {
 		}
 	}
 
-	public TranslationPoint findTranslationPointTo(World otherWorld) {
+	public TranslationPoint findTranslationPointTo(Vector2 pos, World otherWorld) {
+
+		TranslationPoint bestPoint = null;
+		float bestDist2 = Float.MAX_VALUE;
+
 		for (Actor a : actors) {
-			if (a instanceof TranslationPoint && ((TranslationPoint) a).destination == otherWorld) {
-				return (TranslationPoint) a;
+			if (a instanceof TranslationPoint && (((TranslationPoint) a).destination == otherWorld || otherWorld == null)) {
+				float dist2 = pos.dst2(a.getPosition());
+
+				if (dist2 < bestDist2) {
+					bestDist2 = dist2;
+					bestPoint = (TranslationPoint) a;
+				}
 			}
 		}
 
-		return null;
+		return bestPoint;
 	}
 
 	public boolean fixPosition(Vector2 pos) {

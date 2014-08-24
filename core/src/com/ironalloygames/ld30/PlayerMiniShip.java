@@ -24,11 +24,25 @@ public class PlayerMiniShip extends MiniShip implements InputProcessor {
 
 	OrthographicCamera uiCamera = new OrthographicCamera(1024, 768);
 
+	public PlayerMiniShip() {
+		LD30.pc = this;
+		Gdx.input.setInputProcessor(this);
+	}
+
+	@Override
+	public void destroyed() {
+		super.destroyed();
+
+		LD30.pc = null;
+		if (Gdx.input.getInputProcessor() == this)
+			Gdx.input.setInputProcessor(null);
+
+		LD30.respawnTimer = 240;
+	}
+
 	@Override
 	public void enteringWorld(World world) {
 		super.enteringWorld(world);
-
-		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override

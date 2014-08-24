@@ -10,13 +10,13 @@ public class Hyperspace extends World {
 
 	public Hyperspace() {
 		EnemyMiniShip e = new EnemyMiniShip();
-		e.setPosition(new Vector2(-100, 100));
+		e.setPosition(new Vector2(-50, 100));
 		addActor(e);
 	}
 
 	@Override
 	public Color getColor() {
-		return new Color(1, 0, 1, 1);
+		return new Color(0.8f, 0, 1, 1);
 	}
 
 	@Override

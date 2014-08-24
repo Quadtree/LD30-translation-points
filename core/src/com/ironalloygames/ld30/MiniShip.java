@@ -22,6 +22,12 @@ public class MiniShip extends Actor {
 	}
 
 	@Override
+	public void destroyed() {
+		super.destroyed();
+		this.explosion(10);
+	}
+
+	@Override
 	public void enteringWorld(World world) {
 		super.enteringWorld(world);
 

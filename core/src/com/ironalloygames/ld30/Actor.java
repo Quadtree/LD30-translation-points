@@ -11,6 +11,7 @@ import com.ironalloygames.ld30.world.World;
 
 public class Actor {
 	float angle;
+	float angularVelocity;
 	Body body;
 	float hp = Float.MAX_VALUE;
 	public TranslationPoint immuneTranslationPoint;
@@ -54,16 +55,13 @@ public class Actor {
 		bd.position.set(position);
 		bd.linearVelocity.set(velocity);
 		bd.angle = angle;
+		bd.angularVelocity = angularVelocity;
 
 		body = world.physicsWorld.createBody(bd);
 		body.setUserData(this);
 
 		if (originalWorld == null)
 			originalWorld = world;
-	}
-
-	protected BodyType getBodyType() {
-		return BodyDef.BodyType.DynamicBody;
 	}
 
 	public void exitingWorld(World world) {
@@ -74,12 +72,26 @@ public class Actor {
 		world = null;
 	}
 
+	protected void explosion(int fragments) {
+		for (int i = 0; i < fragments; i++) {
+			Fragment f = new Fragment();
+			f.setPosition(position);
+			f.velocity.set(MathUtils.random(-100, 100), MathUtils.random(-100, 100));
+			f.originalWorld = this.originalWorld;
+			world.addActor(f);
+		}
+	}
+
 	public float getAngle() {
 		if (body != null) {
 			return body.getAngle();
 		} else {
 			return angle;
 		}
+	}
+
+	protected BodyType getBodyType() {
+		return BodyDef.BodyType.DynamicBody;
 	}
 
 	public Vector2 getPosition() {
@@ -98,7 +110,7 @@ public class Actor {
 	}
 
 	public boolean keep() {
-		return true;
+		return hp > 0;
 	}
 
 	public void render() {
@@ -130,6 +142,7 @@ public class Actor {
 		velocity = body.getLinearVelocity().cpy();
 		body.setLinearVelocity(velocity.cpy().scl(world.getDragCoeff()));
 		angle = body.getAngle();
+		angularVelocity = body.getAngularVelocity();
 
 		if (immuneTranslationPoint != null) {
 			float dist = immuneTranslationPoint.position.dst(position);

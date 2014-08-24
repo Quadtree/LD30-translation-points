@@ -76,9 +76,6 @@ public class Mothership extends Actor {
 			body.setLinearVelocity(0, 0);
 		}
 
-		if (startTime == 150)
-			detachEngine();
-
 		startTime++;
 	}
 

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.ironalloygames.ld30.world.FireWorld;
 import com.ironalloygames.ld30.world.Happyspace;
 import com.ironalloygames.ld30.world.Hyperspace;
@@ -28,14 +27,15 @@ public class LD30 extends ApplicationAdapter {
 
 	public static PlayerMiniShip pc;
 
+	public static int respawnTimer = 360;
 	public static ShapeRenderer sr;
 
+	public static ArrayList<World> worlds = new ArrayList<World>();
 	World currentWorld;
+
 	Texture img;
 
 	float r = 0;
-
-	ArrayList<World> worlds = new ArrayList<World>();
 
 	@Override
 	public void create() {
@@ -46,8 +46,8 @@ public class LD30 extends ApplicationAdapter {
 
 		a = new Assets();
 
-		pc = new PlayerMiniShip();
-		pc.setPosition(new Vector2(40, 40));
+		// pc = new PlayerMiniShip();
+		// pc.setPosition(new Vector2(40, 40));
 
 		worlds.add(new StartWorld());
 		worlds.add(new FireWorld());
@@ -58,7 +58,7 @@ public class LD30 extends ApplicationAdapter {
 		worlds.add(new NegativeWorld());
 
 		currentWorld = worlds.get(0);
-		currentWorld.addActor(pc);
+		// currentWorld.addActor(pc);
 
 		for (int i = 0; i < worlds.size(); i++) {
 			if (i < worlds.size() - 1) {
@@ -75,6 +75,8 @@ public class LD30 extends ApplicationAdapter {
 		}
 
 		cam = new OrthographicCamera(1024 / METER_SCALE, 768 / METER_SCALE);
+		cam.position.y = 50;
+		cam.update();
 	}
 
 	@Override
@@ -84,7 +86,7 @@ public class LD30 extends ApplicationAdapter {
 			w.updateIfNeeded();
 		}
 
-		if (pc != null)
+		if (pc != null && pc.world != null)
 			currentWorld = pc.world;
 
 		currentWorld.renderBackground();
