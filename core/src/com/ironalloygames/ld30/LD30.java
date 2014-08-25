@@ -184,8 +184,9 @@ public class LD30 extends ApplicationAdapter implements InputProcessor {
 			// currentWorldIndex + " " + currentMusicWorld);
 			currentlyPlayingMusic.setVolume(currentlyPlayingMusic.getVolume() - 0.01f);
 
-			if (currentlyPlayingMusic.getVolume() < 0.01f) {
+			if (currentlyPlayingMusic.getVolume() < 0.05f) {
 				currentlyPlayingMusic.stop();
+				currentlyPlayingMusic.dispose();
 				currentlyPlayingMusic = null;
 			}
 		}
@@ -197,9 +198,11 @@ public class LD30 extends ApplicationAdapter implements InputProcessor {
 		}
 
 		if (noMusicTime > 180) {
-			currentlyPlayingMusic = a.getMusic("world" + currentWorldIndex);
+			// currentlyPlayingMusic = a.getMusic("world" + currentWorldIndex);
+			currentlyPlayingMusic = Gdx.audio.newMusic(Gdx.files.internal("world" + currentWorldIndex + ".ogg"));
 
 			if (currentlyPlayingMusic != null) {
+				currentlyPlayingMusic.setLooping(true);
 				currentlyPlayingMusic.setVolume(0.25f);
 				currentlyPlayingMusic.play();
 				currentMusicWorld = currentWorldIndex;
