@@ -9,7 +9,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -87,8 +86,6 @@ public class LD30 extends ApplicationAdapter implements InputProcessor {
 
 	int currentMusicWorld = -1;
 
-	Texture img;
-
 	int noMusicTime = 0;
 
 	float r = 0;
@@ -96,7 +93,6 @@ public class LD30 extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
 
 		sr = new ShapeRenderer();
 
