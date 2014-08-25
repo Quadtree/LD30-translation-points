@@ -199,7 +199,7 @@ public class Mothership extends Actor {
 		}
 
 		if (LD30.pc != null && LD30.pc.world == world && LD30.pc.position.dst2(position) < 150 * 150 && LD30.pc.hp < LD30.pc.getMaxHP()) {
-			LD30.pc.hp = Math.min(LD30.pc.hp + 0.002f, LD30.pc.getMaxHP());
+			LD30.pc.hp = Math.min(LD30.pc.hp + 0.005f, LD30.pc.getMaxHP());
 
 		}
 
@@ -208,6 +208,9 @@ public class Mothership extends Actor {
 		if (firstSpawnPossible) {
 			for (final Actor a : world.actors) {
 				if (a instanceof Gem || a instanceof MothershipEngine) {
+
+					if (a instanceof MothershipEngine && LD30.enemyMiniShip != null && LD30.enemyMiniShip.keep() && LD30.enemyMiniShip.world == world)
+						continue;
 
 					isRayClear = true;
 
@@ -232,7 +235,7 @@ public class Mothership extends Actor {
 
 						towBeamTargets.add(a.position.cpy());
 
-						if (position.dst2(a.position) < 50 * 50 && a instanceof MothershipEngine && ((MothershipEngine) a).offTimer > 600 * 3) {
+						if (position.dst2(a.position) < 50 * 50 && a instanceof MothershipEngine && ((MothershipEngine) a).offTimer > 200 * 3) {
 							a.hp = -1000;
 							this.hasEngine = true;
 						}
