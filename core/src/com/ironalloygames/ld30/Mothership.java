@@ -150,7 +150,7 @@ public class Mothership extends Actor {
 			this.addDialogue("Engine?", new Vector2(40, 0), 120);
 
 		if (heyDialogTimer == 650)
-			this.addDialogue("Engine? Damnit!", new Vector2(35, 0), 120);
+			this.addDialogue("Engine? Dammit!", new Vector2(35, 0), 120);
 
 		if (heyDialogTimer == 800) {
 			this.addDialogue("Exploration ship, please see if you can retrieve our engine.", new Vector2(50, 0), 600);

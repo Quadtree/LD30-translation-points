@@ -83,7 +83,7 @@ public class MiniShip extends Actor {
 	public void takeDamage(float damage) {
 
 		if (shield > 0) {
-			float absorb = Math.max(shield, damage);
+			float absorb = Math.min(shield, damage);
 			damage -= absorb;
 			shield -= absorb;
 		}
